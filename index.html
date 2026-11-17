@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tri Ân Ngày Nhà Giáo Việt Nam 20/11 | Tập Thể Lớp 11/1</title>
+  <meta name="description" content="Trang web tri ân Ngày Nhà giáo Việt Nam 20/11 từ Tập thể Lớp 11/1 - Gửi Người Lái Đò Thầm Lặng. Thước phim và album ảnh kỷ niệm thanh xuân.">
+  <meta name="theme-color" content="#0D1B2A">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tri Ân Ngày Nhà Giáo Việt Nam 20/11 - Tập Thể Lớp 11/1">
+  <meta property="og:description" content="Kính dâng thầy cô thước phim tri ân và album ảnh thanh xuân tươi đẹp của tập thể 11/1.">
+  <meta property="og:image" content="anh-lop-11-1.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              50: '#FDFBF7',
+              100: '#FAF6ED',
+              200: '#F4ECE0',
+              300: '#E7D8C4',
+            },
+            amberGold: {
+              300: '#FDE68A',
+              400: '#FBBF24',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+              800: '#92400E',
+            },
+            deepNavy: {
+              800: '#1B263B',
+              900: '#0D1B2A',
+              950: '#070D18',
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            script: ['"Dancing Script"', 'cursive'],
+            mono: ['"JetBrains Mono"', 'Consolas', 'monospace'],
+          },
+          animation: {
+            'float-slow': 'float 5s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2.5s infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.04)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0D1B2A;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D97706;
+      border-radius: 9999px;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      background-color: #070D18;
+      color: #1E293B;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .font-script {
+      font-family: 'Dancing Script', cursive, sans-serif;
+    }
+    .font-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .polaroid-frame {
+      box-shadow: 
+        0 12px 28px -6px rgba(0, 0, 0, 0.28),
+        0 6px 12px -4px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(217, 119, 6, 0.15);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .polaroid-frame:hover {
+      box-shadow: 
+        0 20px 35px -8px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(245, 158, 11, 0.2);
+    }
+
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    #heart-burst-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .video-ratio-16-9 {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+    }
+    .video-ratio-9-16 {
+      aspect-ratio: 9 / 16;
+      max-width: 330px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      touch-action: pan-y pinch-zoom;
+    }
+    .slider-item {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    /* Sound waves animation */
+    .sound-wave-bar {
+      display: inline-block;
+      width: 2px;
+      height: 12px;
+      margin: 0 1px;
+      background-color: currentColor;
+      border-radius: 9999px;
+      animation: soundWave 1.2s ease-in-out infinite alternate;
+    }
+    .sound-wave-bar:nth-child(2) { animation-delay: 0.2s; height: 16px; }
+    .sound-wave-bar:nth-child(3) { animation-delay: 0.4s; height: 8px; }
+
+    @keyframes soundWave {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1.2); }
+    }
+
+    /* Admin only elements visibility */
+    .admin-only {
+      display: none !important;
+    }
+    body.is-admin .admin-only {
+      display: flex !important;
+    }
+    body.is-admin .admin-only-block {
+      display: block !important;
+    }
+
+    /* Terminal CMD styling */
+    .cmd-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background-color: #22c55e;
+      vertical-align: middle;
+      animation: cmdBlink 1s infinite;
+    }
+    @keyframes cmdBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-deepNavy-950 flex justify-center selection:bg-amberGold-500 selection:text-white">
+
+  <!-- Audio Background Player (File nhac-nen-20-11.mp3) -->
+  <audio id="bg-music" src="nhac-nen-20-11.mp3" loop preload="auto"></audio>
+
+  <!-- Petals & Heart Canvas -->
+  <canvas id="petals-canvas"></canvas>
+  <div id="heart-burst-container"></div>
+
+  <!-- Mobile-First App Wrapper -->
+  <div class="w-full max-w-md sm:max-w-lg md:max-w-xl min-h-screen bg-cream-50 text-slate-800 shadow-2xl relative overflow-x-hidden flex flex-col border-x border-amberGold-600/25">
+
+    <!-- ================= ADMIN BANNER (CHỈ ADMIN THẤY) ================= -->
+    <div id="admin-top-banner" class="admin-only bg-amberGold-600 text-white px-3 py-1.5 text-xs font-semibold items-center justify-between z-50 shadow-md">
+      <div class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        <span>Chế độ Admin (Pass: 2011)</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <!-- Nút Mở Terminal CMD -->
+        <button id="btn-open-cmd" class="px-2 py-0.5 rounded bg-black/40 hover:bg-black/60 text-emerald-300 font-mono text-[11px] font-bold active:scale-95 transition flex items-center gap-1 border border-emerald-500/50 shadow-xs">
+          <span>&gt;_ CMD Admin</span>
+        </button>
+        <!-- Nút Thoát Admin -->
+        <button id="btn-admin-logout" class="px-2 py-0.5 rounded bg-black/20 hover:bg-black/30 text-[11px] font-bold active:scale-95 transition">
+          Thoát
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= TOP NAVIGATION BAR ================= -->
+    <header class="sticky top-0 z-40 bg-cream-50/90 backdrop-blur-md border-b border-amberGold-600/20 px-4 py-2 flex items-center justify-between transition-all">
+      <div class="flex items-center space-x-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+        <span class="text-[11px] font-bold tracking-wider uppercase text-amberGold-800">20.11 • Tri Ân Thầy Cô</span>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <!-- Nhạc nền MP3 Toggle Button -->
+        <button id="btn-music" aria-label="Bật/Tắt Nhạc Nền" class="relative px-2.5 py-1.5 rounded-full bg-cream-100 hover:bg-amberGold-100 text-amberGold-800 border border-amberGold-600/30 shadow-xs transition active:scale-95 flex items-center gap-1.5" title="Bật/Tắt nhạc nền tri ân">
+          <div id="music-playing-waves" class="hidden items-center text-amberGold-600">
+            <span class="sound-wave-bar"></span>
+            <span class="sound-wave-bar"></span>
+            <span class="sound-wave-bar"></span>
+          </div>
+          <svg id="icon-music-paused" class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.27 4.27c-.4.29-.86.51-1.37.64l1.46 1.46c.86-.34 1.62-.84 2.24-1.46l2.13 2.13L21 20.73 4.27 3zM14 7h4V3h-6v5.18l2 2V7z"/>
+          </svg>
+          <span id="music-status-text" class="text-[11px] font-semibold text-slate-600">Nhạc nền</span>
+        </button>
+
+        <!-- Petals Toggle -->
+        <button id="btn-petals" aria-label="Bật/Tắt Hoa Bay" class="p-2 rounded-full bg-cream-100 hover:bg-amberGold-100 text-amberGold-700 border border-amberGold-600/30 shadow-xs transition active:scale-95 flex items-center justify-center" title="Bật/Tắt hiệu ứng hoa rơi">
+          <svg class="w-4 h-4 text-amberGold-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+
+        <!-- Share Page -->
+        <button id="btn-share" aria-label="Chia sẻ trang" class="p-2 rounded-full bg-cream-100 hover:bg-amberGold-100 text-amberGold-700 border border-amberGold-600/30 shadow-xs transition active:scale-95 flex items-center justify-center" title="Chia sẻ trang web">
+          <svg class="w-4 h-4 text-amberGold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow pb-16">
+
+      <!-- ================= 1. HEADER SECTION (LOGO LỚP & TIÊU ĐỀ) ================= -->
+      <section class="pt-8 pb-4 px-6 text-center relative overflow-hidden bg-gradient-to-b from-cream-100/90 to-cream-50">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amberGold-300/35 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Class Logo (Nhấn giữ 2s để mở nhanh hộp Admin) -->
+        <div class="relative z-10 inline-block mb-3.5 cursor-pointer" id="logo-trigger" title="Nhấn giữ để mở hộp Admin">
+          <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full p-1 bg-gradient-to-tr from-amberGold-600 via-amberGold-400 to-amberGold-700 shadow-xl shadow-amberGold-900/15 transition-transform duration-300 hover:scale-105">
+            <div class="absolute -inset-1 rounded-full bg-amberGold-400/40 blur-sm animate-pulse-glow -z-10"></div>
+            
+            <div class="w-full h-full rounded-full overflow-hidden bg-deepNavy-900 flex items-center justify-center p-1 border-2 border-cream-100 shadow-inner">
+              <img 
+                id="main-logo-img"
+                src="logo-lop.png" 
+                alt="Logo Tập Thể Lớp 11/1 - Trường THPT Hà Trung" 
+                class="w-full h-full object-contain transform transition duration-500 hover:rotate-3"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=300&q=80';"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Titles -->
+        <div class="relative z-10 space-y-1 reveal">
+          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-deepNavy-900 text-amberGold-300 border border-amberGold-500/40 shadow-xs text-[11px] font-semibold tracking-wider">
+            <span>B1 • BEATING AS ONE • THPT HÀ TRUNG</span>
+          </div>
+
+          <h2 class="text-xs sm:text-sm uppercase font-extrabold tracking-widest text-deepNavy-900 pt-1">
+            TẬP THỂ LỚP 11/1
+          </h2>
+          <p class="text-[12px] sm:text-[13px] font-semibold tracking-wider text-amberGold-700 uppercase">
+            TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20/11
+          </p>
+        </div>
+
+        <!-- Hero Intro Heading -->
+        <div class="mt-4 pt-3 border-t border-amberGold-600/20 reveal">
+          <h1 class="font-script text-4xl sm:text-5xl text-deepNavy-900 font-bold leading-tight">
+            Gửi Người Lái Đò Thầm Lặng
+          </h1>
+          <p class="text-slate-600 text-xs sm:text-sm font-light mt-1 italic max-w-xs mx-auto">
+            “Kính chúc Thầy Cô luôn dồi dào sức khỏe, hạnh phúc và vẹn nguyên ngọn lửa đam mê vì thế hệ tương lai.”
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= 2. PHẦN VIDEO (TRỌNG TÂM - ĐẶT Ở TRÊN PHẦN ẢNH) ================= -->
+      <section class="px-4 py-6 bg-gradient-to-b from-cream-50 via-cream-100/60 to-cream-50 relative border-y border-amberGold-600/15">
+        <div class="max-w-md mx-auto">
+
+          <!-- Video Section Header -->
+          <div class="text-center mb-4 reveal">
+            <div class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-deepNavy-900 text-amberGold-400 mb-1.5 shadow-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900">
+              Thước Phim Tri Ân Từ 11/1
+            </h2>
+            <p class="text-xs text-slate-600 mt-0.5">
+              Những ký ức xúc động và trọn vẹn lòng biết ơn gửi Thầy Cô
+            </p>
+
+            <!-- Video Aspect Switcher -->
+            <div class="flex items-center justify-center gap-2 mt-3">
+              <span class="text-[11px] text-slate-500 font-medium">Khung hình:</span>
+              <button id="btn-ratio-16-9" class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-deepNavy-900 text-amberGold-300 shadow-xs transition active:scale-95">
+                Ngang 16:9
+              </button>
+              <button id="btn-ratio-9-16" class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-cream-200 text-slate-700 hover:bg-cream-300 transition active:scale-95">
+                Dọc 9:16 (TikTok)
+              </button>
+            </div>
+          </div>
+
+          <!-- Video Player Box (Xem trực tiếp, khi phát sẽ TỰ ĐỘNG TẮT NHẠC NỀN) -->
+          <div class="relative reveal">
+            <div class="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-amberGold-600 via-amberGold-400 to-amberGold-700 opacity-60 blur-md pointer-events-none"></div>
+
+            <div id="video-wrapper" class="relative rounded-2xl overflow-hidden bg-deepNavy-950 shadow-2xl border-2 border-amberGold-400/80 video-ratio-16-9 transition-all duration-500 flex items-center justify-center">
+              
+              <!-- Direct Video Player -->
+              <video 
+                id="tribute-video"
+                class="w-full h-full object-cover"
+                controls 
+                playsinline 
+                webkit-playsinline
+                preload="metadata"
+                poster="anh-lop-11-1.jpg"
+              >
+                <source src="video-20-11.mp4" type="video/mp4">
+                Trình duyệt của bạn có thể phát trực tiếp thẻ video này.
+              </video>
+
+              <!-- Touch-to-Play Overlay -->
+              <div id="video-overlay" class="absolute inset-0 bg-deepNavy-950/50 backdrop-blur-[1px] flex flex-col items-center justify-center cursor-pointer transition-opacity duration-300 z-10 p-4 text-center">
+                <button class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-amberGold-600 to-amberGold-400 text-deepNavy-900 flex items-center justify-center shadow-xl shadow-amberGold-500/40 hover:scale-105 active:scale-95 transition-transform duration-200 mb-2.5">
+                  <svg class="w-8 h-8 ml-1 fill-current" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </button>
+                <span class="text-cream-50 font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full bg-deepNavy-900/90 border border-amberGold-500/40 shadow">
+                  Chạm để xem trực tiếp thước phim ▶
+                </span>
+                <span class="text-amberGold-300/80 text-[10px] mt-1.5">
+                  (Nhạc nền sẽ tự động tắt khi xem video)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN ONLY: KHU VỰC THAY VIDEO DÀNH RIÊNG CHO ADMIN -->
+          <div class="admin-only mt-3.5 p-3.5 bg-amberGold-50 border-2 border-dashed border-amberGold-500/80 rounded-xl space-y-2 text-xs">
+            <div class="flex items-center justify-between text-deepNavy-900 font-bold text-xs">
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-amberGold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Khu vực Quản trị Video (Chỉ Admin thấy)
+              </span>
+              <span class="text-[10px] text-amberGold-800 bg-amberGold-200 px-1.5 py-0.5 rounded font-mono">ADMIN</span>
+            </div>
+
+            <p class="text-[11px] text-slate-600">
+              Bạn có thể tải video từ máy lên phát ngay, hoặc dán link YouTube thước phim của lớp:
+            </p>
+
+            <div class="pt-1 flex flex-wrap items-center gap-2">
+              <label for="admin-video-file" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-deepNavy-900 text-amberGold-300 font-semibold text-[11px] cursor-pointer hover:bg-slate-800 active:scale-95 transition shadow-xs">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                <span>Tải video từ máy lên</span>
+              </label>
+              <input type="file" id="admin-video-file" accept="video/*" class="hidden">
+
+              <button id="admin-btn-toggle-yt" class="px-3 py-1.5 rounded-lg bg-white border border-amberGold-400 text-slate-800 font-semibold text-[11px] transition active:scale-95 shadow-xs">
+                Dán link YouTube
+              </button>
+            </div>
+
+            <div id="admin-yt-box" class="hidden pt-2 border-t border-amberGold-300">
+              <label class="block text-[11px] font-semibold text-slate-700 mb-1">Dán liên kết YouTube:</label>
+              <div class="flex gap-1.5">
+                <input type="text" id="admin-yt-input" placeholder="https://youtu.be/..." class="flex-grow px-2 py-1 text-xs rounded border border-slate-300 focus:outline-none focus:border-amberGold-500 bg-white">
+                <button id="admin-yt-submit" class="px-3 py-1 text-xs bg-amberGold-600 text-white font-bold rounded hover:bg-amberGold-700 active:scale-95">
+                  Lưu & Phát
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 3. PHẦN ẢNH CỦA 11/1 (Ở DƯỚI VIDEO - LƯỚT QUA ĐỂ XEM) ================= -->
+      <section class="px-4 py-8 relative">
+        <div class="max-w-md mx-auto">
+
+          <div class="text-center mb-5 reveal">
+            <span class="inline-block text-amberGold-700 text-[11px] font-bold uppercase tracking-wider bg-amberGold-100 px-3 py-0.5 rounded-full mb-1.5">
+              Album Kỷ Niệm 11/1
+            </span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900">
+              Thanh Xuân Dưới Mái Trường
+            </h2>
+            <p class="text-slate-600 text-xs sm:text-sm mt-1">
+              Vuốt hoặc bấm mũi tên để lướt xem các bức ảnh thanh xuân của lớp 11/1
+            </p>
+          </div>
+
+          <!-- SLIDER / CAROUSEL -->
+          <div class="relative reveal" id="carousel-container">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-amberGold-300/80 backdrop-blur-[1px] border-x border-amberGold-500/40 shadow-sm z-20 rotate-[-1.5deg] rounded-sm pointer-events-none"></div>
+
+            <div class="overflow-hidden rounded-2xl p-1">
+              <div class="slider-track" id="slider-track">
+                <!-- Render động từ mảng photosData -->
+              </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button id="btn-prev-slide" aria-label="Ảnh trước" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 w-9 h-9 rounded-full bg-deepNavy-900/90 text-amberGold-300 hover:bg-deepNavy-900 border border-amberGold-500/40 shadow-lg flex items-center justify-center transition active:scale-90 z-20">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button id="btn-next-slide" aria-label="Ảnh sau" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 w-9 h-9 rounded-full bg-deepNavy-900/90 text-amberGold-300 hover:bg-deepNavy-900 border border-amberGold-500/40 shadow-lg flex items-center justify-center transition active:scale-90 z-20">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Pagination Indicator Dots -->
+          <div class="flex items-center justify-center gap-2 mt-4" id="carousel-dots">
+            <!-- Render động theo số lượng ảnh -->
+          </div>
+
+          <!-- ADMIN ONLY: KHU VỰC QUẢN LÝ ẢNH -->
+          <div class="admin-only mt-4 p-3.5 bg-amberGold-50 border-2 border-dashed border-amberGold-500/80 rounded-xl space-y-2.5 text-xs">
+            <div class="flex items-center justify-between text-deepNavy-900 font-bold">
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-amberGold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                Quản trị Album Ảnh (Chỉ Admin thấy)
+              </span>
+              <span class="text-[10px] text-amberGold-800 bg-amberGold-200 px-1.5 py-0.5 rounded font-mono">ADMIN</span>
+            </div>
+
+            <p class="text-[11px] text-slate-600">
+              Đang xem ảnh số: <strong id="admin-current-slide-badge" class="text-amberGold-800">1</strong>. Bạn có thể thay ảnh này hoặc thêm ảnh mới:
+            </p>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <label for="admin-replace-current-photo" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-deepNavy-900 text-amberGold-300 font-semibold text-[11px] cursor-pointer hover:bg-slate-800 active:scale-95 transition shadow-xs">
+                <span>📷 Đổi ảnh đang xem</span>
+              </label>
+              <input type="file" id="admin-replace-current-photo" accept="image/*" class="hidden">
+
+              <label for="admin-add-new-photo" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-700 text-white font-semibold text-[11px] cursor-pointer hover:bg-emerald-800 active:scale-95 transition shadow-xs">
+                <span>➕ Thêm ảnh mới</span>
+              </label>
+              <input type="file" id="admin-add-new-photo" accept="image/*" class="hidden">
+
+              <button id="admin-btn-edit-caption" class="px-2.5 py-1.5 rounded-lg bg-white border border-amberGold-400 text-slate-800 font-semibold text-[11px] active:scale-95 transition shadow-xs">
+                ✏ Sửa chú thích ảnh
+              </button>
+
+              <button id="admin-btn-delete-photo" class="px-2.5 py-1.5 rounded-lg bg-rose-600 text-white font-semibold text-[11px] active:scale-95 transition shadow-xs">
+                🗑 Xóa ảnh này
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 4. LỜI NHẮN GỬI & QUOTE BOX ================= -->
+      <section class="px-5 py-6 relative">
+        <div class="max-w-md mx-auto reveal">
+          <div class="relative bg-white rounded-2xl p-6 sm:p-7 border border-amberGold-600/30 shadow-xl shadow-amberGold-900/5">
+            <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-amberGold-500 rounded-tl-sm"></div>
+            <div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-amberGold-500 rounded-tr-sm"></div>
+            <div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-amberGold-500 rounded-bl-sm"></div>
+            <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-amberGold-500 rounded-br-sm"></div>
+
+            <div class="text-amberGold-400 font-serif text-5xl leading-none -mt-2 mb-1 select-none">“</div>
+
+            <div id="quote-content-display" class="space-y-3.5 text-slate-700 text-sm sm:text-[15px] leading-relaxed">
+              <p>
+                Kính gửi <strong class="text-deepNavy-900 font-semibold">Quý Thầy Cô kính yêu</strong>,
+              </p>
+              <p class="italic text-slate-600">
+                “Có một nghề bụi phấn bám đầy tay, người ta bảo là nghề trong sạch nhất.<br>
+                Có một nghề không trồng cây vào đất, lại nở cho đời muôn vạn đóa hoa thơm.”
+              </p>
+              <p>
+                Nhân ngày Nhà giáo Việt Nam 20/11, tập thể <span class="font-semibold text-deepNavy-900">Lớp 11/1</span> xin kính gửi đến Thầy Cô ngàn lời tri ân sâu sắc nhất. Cảm ơn Thầy Cô đã luôn kiên nhẫn chở che, dìu dắt và truyền cho chúng em ngọn lửa đam mê tri thức.
+              </p>
+              <p>
+                Kính chúc Thầy Cô luôn dồi dào sức khỏe, tràn đầy niềm vui và mãi là người lái đò tận tụy đưa bao thế hệ học trò đến bến bờ ước mơ!
+              </p>
+            </div>
+
+            <!-- Signature -->
+            <div class="mt-6 pt-4 border-t border-amberGold-200/60 flex items-center justify-between">
+              <div>
+                <span class="block text-xs uppercase tracking-wider text-amberGold-800 font-bold">Kính dâng Thầy Cô</span>
+                <span class="block text-xs text-slate-500">Tập thể học sinh Lớp 11/1</span>
+              </div>
+              <div class="text-right">
+                <span class="font-script text-2xl text-deepNavy-900 font-bold">11/1 Forever</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN SỬA LỜI TRI ÂN -->
+          <div class="admin-only mt-3 text-center">
+            <button id="admin-btn-edit-quote" class="px-3 py-1.5 rounded-lg bg-amberGold-100 text-amberGold-900 border border-amberGold-400 text-xs font-semibold hover:bg-amberGold-200 transition">
+              ✏ Chỉnh sửa lời chúc tri ân này (Admin)
+            </button>
+          </div>
+
+          <!-- THẢ TIM TRI ÂN -->
+          <div class="mt-6 text-center reveal">
+            <button id="btn-heart-burst" class="group relative inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-rose-500 via-amberGold-500 to-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-500/25 hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
+              <svg class="w-5 h-5 fill-current animate-bounce text-white" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+              </svg>
+              <span>Thả tim tri ân Thầy Cô</span>
+              <span id="heart-count" class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs font-mono">1.101</span>
+            </button>
+            <p class="text-[11px] text-slate-500 mt-2">
+              Chạm liên tục để gửi muôn đóa hoa và trái tim rực rỡ ✨
+            </p>
+          </div>
+
+          <!-- SỔ LƯU BÚT MINI -->
+          <div class="mt-8 bg-white/90 rounded-2xl p-5 border border-cream-300 shadow-xs reveal">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-serif font-bold text-deepNavy-900 text-base flex items-center gap-1.5">
+                <span>💌</span> Sổ Lưu Bút Tri Ân 11/1
+              </h3>
+              <span id="wishes-count" class="text-[11px] text-amberGold-700 font-semibold bg-amberGold-100 px-2 py-0.5 rounded-full">3 lời chúc</span>
+            </div>
+
+            <div id="wishes-container" class="space-y-2 max-h-44 overflow-y-auto pr-1 text-xs">
+              <!-- Render động -->
+            </div>
+
+            <form id="form-wish" class="mt-3 pt-3 border-t border-slate-100 space-y-2">
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="input-wish-name" placeholder="Tên bạn..." required class="col-span-1 px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:border-amberGold-500">
+                <input type="text" id="input-wish-text" placeholder="Viết vài dòng gửi Thầy Cô..." required class="col-span-2 px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:border-amberGold-500">
+              </div>
+              <button type="submit" class="w-full py-1.5 bg-deepNavy-900 text-amberGold-300 font-semibold text-xs rounded-lg hover:bg-slate-800 transition active:scale-95 shadow-xs">
+                Gửi Lời Chúc Vào Sổ Kỷ Niệm ✦
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= 5. FOOTER ================= -->
+    <footer class="bg-deepNavy-900 text-cream-100 py-8 px-6 text-center relative border-t-2 border-amberGold-500">
+      <div class="mb-4">
+        <a href="#" class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-deepNavy-800 hover:bg-amberGold-600 text-amberGold-400 hover:text-white border border-amberGold-600/30 transition shadow-sm" title="Về đầu trang">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="space-y-1.5">
+        <p class="text-xs sm:text-sm font-medium tracking-wide">
+          Made with <span class="text-rose-500 animate-pulse">❤️</span> by <span class="font-semibold text-amberGold-400">Tập thể 11/1</span>
+        </p>
+        <p class="text-[11px] text-slate-400">
+          Trường THPT Hà Trung • B1 - Beating As One
+        </p>
+        <p class="text-[10px] text-amberGold-500/80 pt-1 font-mono tracking-wider">
+          TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20.11
+        </p>
+
+        <!-- Nút mở cổng Admin ở footer -->
+        <div class="pt-3">
+          <button id="btn-admin-gate" class="text-[10px] text-slate-500 hover:text-amberGold-400 transition flex items-center justify-center gap-1 mx-auto">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <span>Quản trị viên (Pass: 2011)</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ================= MODAL: TERMINAL CMD ADMIN CONSOLE ================= -->
+  <div id="modal-cmd" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex-col items-center justify-center p-3 sm:p-5">
+    <div class="w-full max-w-2xl bg-[#0C1017] rounded-xl border border-emerald-500/50 shadow-2xl overflow-hidden flex flex-col h-[85vh] max-h-[600px] font-mono text-xs">
+      
+      <!-- CMD Header -->
+      <div class="bg-[#161B22] px-4 py-2.5 border-b border-emerald-500/30 flex items-center justify-between text-slate-300">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-rose-500 inline-block cursor-pointer" id="btn-close-cmd-dot"></span>
+          <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+          <span class="ml-2 font-bold text-emerald-400 text-[11px]">ADMIN TERMINAL CMD - 11/1 CONSOLE</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] text-slate-500 hidden sm:inline">Phím tắt: ESC để thoát</span>
+          <button id="btn-close-cmd" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] active:scale-95">
+            ✕ Đóng
+          </button>
+        </div>
+      </div>
+
+      <!-- CMD Output Screen -->
+      <div id="cmd-output" class="flex-grow p-4 overflow-y-auto space-y-1.5 text-slate-300 select-text leading-relaxed">
+        <div class="text-amber-400 whitespace-pre">
+  ██████╗  ██╗     ██████╗   ██████╗ ███╗   ███╗██████╗ 
+  ██╔══██╗███║    ██╔════╝  ██╔════╝ ████╗ ████║██╔══██╗
+  ██████╔╝╚██║    ███████╗  ██║     ██╔████╔██║██║  ██║
+  ██╔══██╗ ██║    ██╔═══██╗ ██║     ██║╚██╔╝██║██║  ██║
+  ██████╔╝ ██║    ╚██████╔╝ ╚██████╗██║ ╚═╝ ██║██████╔╝
+  ╚═════╝  ╚═╝     ╚═════╝   ╚═════╝╚═╝     ╚═╝╚═════╝ 
+        </div>
+        <div class="text-emerald-400 font-bold">
+          ✦ HỆ THỐNG DÒNG LỆNH QUẢN TRỊ 11/1 (B1 - BEATING AS ONE) ✦
+        </div>
+        <div class="text-slate-400 text-[11px]">
+          Chào mừng Quản trị viên! Gõ <span class="text-amber-300 font-bold">help</span> để xem tất cả các lệnh thao tác nhanh trên website.
+        </div>
+        <div class="text-slate-500 text-[10px] border-b border-slate-800 pb-2">
+          Hệ điều hành web: Antigravity v2.0 • Trạng thái: Đã xác thực (Pass: 2011)
+        </div>
+      </div>
+
+      <!-- CMD Input Line -->
+      <form id="cmd-form" class="bg-[#12161F] p-3 border-t border-emerald-500/30 flex items-center gap-2">
+        <span class="text-emerald-400 font-bold whitespace-nowrap">admin@11-1:~$</span>
+        <input 
+          type="text" 
+          id="cmd-input" 
+          autocomplete="off" 
+          spellcheck="false" 
+          class="flex-grow bg-transparent text-emerald-300 focus:outline-none font-mono text-xs caret-emerald-400"
+          placeholder="Gõ lệnh (vd: help, video, photo, music, hearts, cls)..."
+        >
+        <button type="submit" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded text-[11px] active:scale-95 transition">
+          GỬI
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ĐĂNG NHẬP ADMIN (PASS: 2011) ================= -->
+  <div id="modal-admin-login" class="fixed inset-0 bg-deepNavy-950/85 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
+    <div class="w-full max-w-xs bg-white rounded-2xl p-5 shadow-2xl border-2 border-amberGold-500 text-center space-y-3">
+      <div class="w-12 h-12 mx-auto rounded-full bg-amberGold-100 text-amberGold-700 flex items-center justify-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="font-serif font-bold text-deepNavy-900 text-base">Xác Thực Quản Trị Viên</h3>
+        <p class="text-[11px] text-slate-500">Chỉ admin lớp 11/1 mới có quyền chỉnh sửa ảnh và video</p>
+      </div>
+      <form id="form-admin-auth" class="space-y-2.5">
+        <input type="password" id="admin-pass-input" placeholder="Nhập mật khẩu admin..." class="w-full px-3 py-2 text-center text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-amberGold-500">
+        <div class="flex gap-2">
+          <button type="button" id="btn-cancel-admin-login" class="w-1/2 py-1.5 text-xs rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200">
+            Hủy
+          </button>
+          <button type="submit" class="w-1/2 py-1.5 text-xs rounded-lg bg-amberGold-600 text-white font-bold hover:bg-amberGold-700 shadow">
+            Mở Quyền
+          </button>
+        </div>
+      </form>
+      <p class="text-[10px] text-slate-400">Mật khẩu admin: <code class="font-bold text-amberGold-700">2011</code></p>
+    </div>
+  </div>
+
+  <!-- ================= LIGHTBOX MODAL: XEM ẢNH PHÓNG TO ================= -->
+  <div id="photo-modal" class="fixed inset-0 bg-deepNavy-950/95 backdrop-blur-md z-50 hidden flex-col items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <button id="btn-close-modal" aria-label="Đóng" class="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition active:scale-90">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="max-w-3xl w-full max-h-[85vh] flex flex-col items-center">
+      <img id="modal-img" src="" alt="Ảnh phóng to" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl border-2 border-amberGold-500/50">
+      <p id="modal-caption" class="text-cream-100 font-script text-2xl sm:text-3xl mt-4 text-center">
+        Thanh xuân của 11/1 dưới mái trường thân yêu
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* =========================================================
+       0. HỆ THỐNG PHÂN QUYỀN ADMIN (MẬT KHẨU: 2011)
+       ========================================================= */
+    const VALID_PASSWORDS = ['2011', '1101', '11b1', '11/1'];
+    let isAdmin = localStorage.getItem('is_admin_11_1') === 'true';
+
+    function setAdminState(adminActive) {
+      isAdmin = adminActive;
+      if (isAdmin) {
+        document.body.classList.add('is-admin');
+        localStorage.setItem('is_admin_11_1', 'true');
+      } else {
+        document.body.classList.remove('is-admin');
+        localStorage.removeItem('is_admin_11_1');
+        closeCmd();
+      }
+      renderCarousel();
+      renderWishes();
+    }
+
+    const modalAdminLogin = document.getElementById('modal-admin-login');
+    const btnAdminGate = document.getElementById('btn-admin-gate');
+    const formAdminAuth = document.getElementById('form-admin-auth');
+    const adminPassInput = document.getElementById('admin-pass-input');
+    const btnCancelAdminLogin = document.getElementById('btn-cancel-admin-login');
+    const btnAdminLogout = document.getElementById('btn-admin-logout');
+
+    btnAdminGate.addEventListener('click', () => {
+      if (isAdmin) {
+        openCmd();
+      } else {
+        modalAdminLogin.classList.remove('hidden');
+        modalAdminLogin.classList.add('flex');
+        adminPassInput.value = '';
+        adminPassInput.focus();
+      }
+    });
+
+    btnCancelAdminLogin.addEventListener('click', () => {
+      modalAdminLogin.classList.add('hidden');
+      modalAdminLogin.classList.remove('flex');
+    });
+
+    formAdminAuth.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pwd = adminPassInput.value.trim().toLowerCase();
+      if (VALID_PASSWORDS.includes(pwd)) {
+        setAdminState(true);
+        modalAdminLogin.classList.add('hidden');
+        modalAdminLogin.classList.remove('flex');
+        openCmd(); // Tự động mở cửa sổ CMD cho Admin luôn!
+      } else {
+        alert('❌ Mật khẩu không chính xác! Mật khẩu là: 2011');
+      }
+    });
+
+    btnAdminLogout.addEventListener('click', () => {
+      setAdminState(false);
+      alert('Đã thoát chế độ Quản trị viên.');
+    });
+
+    let logoTimer = null;
+    const logoTrigger = document.getElementById('logo-trigger');
+    logoTrigger.addEventListener('mousedown', () => {
+      logoTimer = setTimeout(() => btnAdminGate.click(), 1800);
+    });
+    logoTrigger.addEventListener('mouseup', () => clearTimeout(logoTimer));
+    logoTrigger.addEventListener('touchstart', () => {
+      logoTimer = setTimeout(() => btnAdminGate.click(), 1800);
+    }, { passive: true });
+    logoTrigger.addEventListener('touchend', () => clearTimeout(logoTimer));
+
+    /* =========================================================
+       0.1 TERMINAL CMD ADMIN CONSOLE LOGIC
+       ========================================================= */
+    const modalCmd = document.getElementById('modal-cmd');
+    const btnOpenCmd = document.getElementById('btn-open-cmd');
+    const btnCloseCmd = document.getElementById('btn-close-cmd');
+    const btnCloseCmdDot = document.getElementById('btn-close-cmd-dot');
+    const cmdForm = document.getElementById('cmd-form');
+    const cmdInput = document.getElementById('cmd-input');
+    const cmdOutput = document.getElementById('cmd-output');
+
+    function openCmd() {
+      if (!isAdmin) {
+        btnAdminGate.click();
+        return;
+      }
+      modalCmd.classList.remove('hidden');
+      modalCmd.classList.add('flex');
+      cmdInput.focus();
+      scrollCmdBottom();
+    }
+
+    function closeCmd() {
+      modalCmd.classList.add('hidden');
+      modalCmd.classList.remove('flex');
+    }
+
+    btnOpenCmd.addEventListener('click', openCmd);
+    btnCloseCmd.addEventListener('click', closeCmd);
+    btnCloseCmdDot.addEventListener('click', closeCmd);
+
+    // Phím tắt bàn phím: ESC để đóng CMD, Ctrl + ` (hoặc Ctrl + Shift + A) để mở CMD
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modalCmd.classList.contains('hidden')) {
+        closeCmd();
+      }
+      if ((e.ctrlKey && e.key === '`') || (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a')) {
+        e.preventDefault();
+        if (modalCmd.classList.contains('hidden')) openCmd();
+        else closeCmd();
+      }
+    });
+
+    function scrollCmdBottom() {
+      cmdOutput.scrollTop = cmdOutput.scrollHeight;
+    }
+
+    function printCmd(text, type = 'normal') {
+      const line = document.createElement('div');
+      if (type === 'cmd') {
+        line.className = 'text-emerald-400 font-bold mt-2';
+        line.innerHTML = `<span class="text-slate-500">admin@11-1:~$</span> ${escapeHTML(text)}`;
+      } else if (type === 'error') {
+        line.className = 'text-rose-400';
+        line.innerHTML = `❌ ${escapeHTML(text)}`;
+      } else if (type === 'success') {
+        line.className = 'text-emerald-300';
+        line.innerHTML = `✔ ${escapeHTML(text)}`;
+      } else if (type === 'warning') {
+        line.className = 'text-amber-300';
+        line.innerHTML = `⚠ ${escapeHTML(text)}`;
+      } else {
+        line.className = 'text-slate-300';
+        line.innerHTML = text; // allow HTML for tables/links
+      }
+      cmdOutput.appendChild(line);
+      scrollCmdBottom();
+    }
+
+    // Xử lý các câu lệnh CMD
+    cmdForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const raw = cmdInput.value.trim();
+      if (!raw) return;
+      cmdInput.value = '';
+
+      printCmd(raw, 'cmd');
+      executeCommand(raw);
+    });
+
+    function executeCommand(input) {
+      const parts = input.trim().split(' ');
+      const cmd = parts[0].toLowerCase();
+      const args = parts.slice(1);
+      const fullArg = args.join(' ');
+
+      switch (cmd) {
+        case 'help':
+        case '?':
+          printCmd(`
+<div class="text-amber-300 font-bold mb-1">DANH SÁCH CÁC CÂU LỆNH CMD ADMIN:</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-slate-300">
+  <div>• <span class="text-emerald-400 font-semibold">video [link/file]</span>: Đổi video hoặc nhúng link YouTube</div>
+  <div>• <span class="text-emerald-400 font-semibold">photo list</span>: Xem danh sách toàn bộ ảnh trong album</div>
+  <div>• <span class="text-emerald-400 font-semibold">photo add [url]</span>: Thêm ảnh mới bằng link ảnh</div>
+  <div>• <span class="text-emerald-400 font-semibold">photo del [số]</span>: Xóa ảnh theo số thứ tự (1, 2,...)</div>
+  <div>• <span class="text-emerald-400 font-semibold">photo title [số] [chữ]</span>: Đổi chú thích ảnh</div>
+  <div>• <span class="text-emerald-400 font-semibold">music on / off</span>: Bật hoặc tắt nhạc nền</div>
+  <div>• <span class="text-emerald-400 font-semibold">music vol [0-100]</span>: Chỉnh âm lượng nhạc (vd: music vol 25)</div>
+  <div>• <span class="text-emerald-400 font-semibold">hearts [số]</span>: Đặt lại số lượt thả tim (vd: hearts 2011)</div>
+  <div>• <span class="text-emerald-400 font-semibold">quote [lời chúc]</span>: Đổi nhanh nội dung bức thư tri ân</div>
+  <div>• <span class="text-emerald-400 font-semibold">wishes list / clear</span>: Quản lý sổ lưu bút tri ân</div>
+  <div>• <span class="text-emerald-400 font-semibold">stats</span>: Thống kê album ảnh, lượt tim, lời chúc</div>
+  <div>• <span class="text-emerald-400 font-semibold">cls / clear</span>: Xóa sạch màn hình CMD</div>
+  <div>• <span class="text-emerald-400 font-semibold">exit</span>: Đóng cửa sổ CMD</div>
+  <div>• <span class="text-emerald-400 font-semibold">logout</span>: Đăng xuất quyền Admin</div>
+</div>
+          `);
+          break;
+
+        case 'video':
+          if (!fullArg) {
+            printCmd('Cú pháp: video [link_youtube_hoặc_file_mp4]. Ví dụ: video https://youtu.be/dQw4w9WgXcQ', 'warning');
+            return;
+          }
+          if (fullArg.includes('youtube.com') || fullArg.includes('youtu.be')) {
+            let vid = fullArg;
+            const m = fullArg.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+            if (m) vid = m[1];
+            if (!bgMusic.paused) { bgMusic.pause(); updateMusicUI(false); }
+            videoWrapper.innerHTML = `
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1" 
+                title="Thước Phim Tri Ân 20/11" 
+                class="w-full h-full rounded-2xl" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+              </iframe>
+            `;
+            printCmd(`Đã cập nhật video YouTube (ID: ${vid}) thành công!`, 'success');
+          } else {
+            tributeVideo.src = fullArg;
+            videoOverlay.style.display = 'none';
+            tributeVideo.play();
+            printCmd(`Đã chuyển nguồn phát video sang: ${fullArg}`, 'success');
+          }
+          break;
+
+        case 'photo':
+          const sub = (args[0] || '').toLowerCase();
+          if (sub === 'list') {
+            let out = '<div class="text-amber-300 font-bold">DANH SÁCH ẢNH HIỆN TẠI:</div>';
+            photosData.forEach((p, i) => {
+              out += `<div>[${i + 1}] <span class="text-white font-semibold">${escapeHTML(p.title)}</span> (${escapeHTML(p.src.substring(0, 35))}...)</div>`;
+            });
+            printCmd(out);
+          } else if (sub === 'add') {
+            const url = args[1];
+            if (!url) {
+              printCmd('Cú pháp: photo add [url_anh]. Ví dụ: photo add https://example.com/anh.jpg', 'warning');
+              return;
+            }
+            const title = args.slice(2).join(' ') || 'Kỷ niệm thanh xuân 11/1';
+            photosData.push({ src: url, title: title, subtitle: 'Khoảnh khắc lớp 11/1' });
+            localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+            currentSlide = photosData.length - 1;
+            renderCarousel();
+            printCmd(`Đã thêm ảnh mới #${photosData.length}: "${title}"`, 'success');
+          } else if (sub === 'del') {
+            const idx = parseInt(args[1]) - 1;
+            if (isNaN(idx) || idx < 0 || idx >= photosData.length) {
+              printCmd(`Số thứ tự không hợp lệ! Hãy nhập từ 1 đến ${photosData.length}.`, 'error');
+              return;
+            }
+            if (photosData.length <= 1) {
+              printCmd('Album phải có ít nhất 1 ảnh!', 'error');
+              return;
+            }
+            const removed = photosData.splice(idx, 1);
+            if (currentSlide >= photosData.length) currentSlide = photosData.length - 1;
+            localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+            renderCarousel();
+            printCmd(`Đã xóa ảnh #${idx + 1}: "${removed[0].title}"`, 'success');
+          } else if (sub === 'title') {
+            const idx = parseInt(args[1]) - 1;
+            const newTitle = args.slice(2).join(' ');
+            if (isNaN(idx) || idx < 0 || idx >= photosData.length || !newTitle) {
+              printCmd('Cú pháp: photo title [số] [tiêu đề mới]. Ví dụ: photo title 1 Nụ cười 11B1', 'warning');
+              return;
+            }
+            photosData[idx].title = newTitle;
+            localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+            renderCarousel();
+            printCmd(`Đã đổi tiêu đề ảnh #${idx + 1} thành: "${newTitle}"`, 'success');
+          } else {
+            printCmd('Lệnh photo: list | add [url] | del [số] | title [số] [chữ]', 'warning');
+          }
+          break;
+
+        case 'music':
+          const mSub = (args[0] || '').toLowerCase();
+          if (mSub === 'on' || mSub === 'play') {
+            bgMusic.play().then(() => updateMusicUI(true));
+            printCmd('Nhạc nền: ĐANG PHÁT 🎵', 'success');
+          } else if (mSub === 'off' || mSub === 'pause' || mSub === 'stop') {
+            bgMusic.pause();
+            updateMusicUI(false);
+            printCmd('Nhạc nền: ĐÃ TẮT ⏸', 'success');
+          } else if (mSub === 'vol' || mSub === 'volume') {
+            const vol = parseInt(args[1]);
+            if (isNaN(vol) || vol < 0 || vol > 100) {
+              printCmd('Cú pháp: music vol [0-100]. Ví dụ: music vol 25', 'warning');
+              return;
+            }
+            bgMusic.volume = vol / 100;
+            printCmd(`Đã đặt âm lượng nhạc nền: ${vol}%`, 'success');
+          } else {
+            printCmd('Lệnh music: on | off | vol [0-100]', 'warning');
+          }
+          break;
+
+        case 'hearts':
+          const hVal = parseInt(fullArg);
+          if (isNaN(hVal)) {
+            printCmd(`Số lượt thả tim hiện tại: ${heartCount.toLocaleString('vi-VN')}. Để đặt lại gõ: hearts 2011`, 'normal');
+          } else {
+            heartCount = hVal;
+            heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
+            localStorage.setItem('hearts_11_1', heartCount.toString());
+            printCmd(`Đã cập nhật số lượt thả tim thành: ${heartCount.toLocaleString('vi-VN')}`, 'success');
+          }
+          break;
+
+        case 'quote':
+          if (!fullArg) {
+            printCmd('Cú pháp: quote [nội dung lời chúc mới].', 'warning');
+            return;
+          }
+          const quoteBox = document.getElementById('quote-content-display');
+          quoteBox.innerHTML = `<p>${escapeHTML(fullArg).replace(/\n/g, '<br>')}</p>`;
+          localStorage.setItem('custom_quote_11_1', quoteBox.innerHTML);
+          printCmd('Đã cập nhật bức thư tri ân thành công!', 'success');
+          break;
+
+        case 'wishes':
+          const wSub = (args[0] || '').toLowerCase();
+          if (wSub === 'clear') {
+            wishesData = [];
+            localStorage.setItem('wishes_11_1', JSON.stringify(wishesData));
+            renderWishes();
+            printCmd('Đã xóa toàn bộ lưu bút tri ân!', 'success');
+          } else {
+            let out = `<div class="text-amber-300 font-bold">LƯU BÚT (${wishesData.length} LỜI CHÚC):</div>`;
+            wishesData.forEach((w, i) => {
+              out += `<div>[${i + 1}] <strong class="text-white">${escapeHTML(w.name)}:</strong> ${escapeHTML(w.text)}</div>`;
+            });
+            printCmd(out);
+          }
+          break;
+
+        case 'stats':
+          printCmd(`
+<div class="text-emerald-300 font-bold">THỐNG KÊ TRANG TRI ÂN 11/1:</div>
+<div>• Số lượng ảnh kỷ niệm: <span class="text-amber-300 font-bold">${photosData.length} ảnh</span></div>
+<div>• Lượt thả tim: <span class="text-rose-400 font-bold">${heartCount.toLocaleString('vi-VN')} tim</span></div>
+<div>• Lời chúc trong lưu bút: <span class="text-blue-300 font-bold">${wishesData.length} lời chúc</span></div>
+<div>• Âm lượng nhạc nền: <span class="text-emerald-400 font-bold">${Math.round(bgMusic.volume * 100)}%</span></div>
+          `);
+          break;
+
+        case 'cls':
+        case 'clear':
+          cmdOutput.innerHTML = '';
+          printCmd('<span class="text-slate-500 text-[11px]">Màn hình console đã được làm sạch. Gõ "help" nếu cần trợ giúp.</span>');
+          break;
+
+        case 'exit':
+        case 'quit':
+          closeCmd();
+          break;
+
+        case 'logout':
+          setAdminState(false);
+          closeCmd();
+          alert('Đã đăng xuất khỏi quyền Admin.');
+          break;
+
+        default:
+          printCmd(`Lệnh không hợp lệ: "${cmd}". Gõ "help" để xem danh sách lệnh!`, 'error');
+          break;
+      }
+    }
+
+    /* =========================================================
+       1. NHẠC NỀN AUDIO MP3 ("NGƯỜI GIEO MẦM XANH")
+       - Mở nhỏ vừa đủ nghe (Volume: 25%)
+       - Khi xem video -> TỰ ĐỘNG TẮT NHẠC NỀN
+       - Tắt video / Dừng video -> TỰ ĐỘNG BẬT LẠI NHẠC NỀN
+       ========================================================= */
+    const bgMusic = document.getElementById('bg-music');
+    const btnMusic = document.getElementById('btn-music');
+    const musicPlayingWaves = document.getElementById('music-playing-waves');
+    const iconMusicPaused = document.getElementById('icon-music-paused');
+    const musicStatusText = document.getElementById('music-status-text');
+
+    bgMusic.volume = 0.25;
+
+    let userPausedMusicManually = false;
+    let wasMusicPlayingBeforeVideo = false;
+
+    function updateMusicUI(isPlaying) {
+      if (isPlaying) {
+        musicPlayingWaves.classList.remove('hidden');
+        musicPlayingWaves.classList.add('flex');
+        iconMusicPaused.classList.add('hidden');
+        musicStatusText.textContent = 'Đang phát';
+        musicStatusText.classList.add('text-amberGold-800');
+        btnMusic.classList.add('bg-amberGold-100', 'border-amberGold-500');
+      } else {
+        musicPlayingWaves.classList.add('hidden');
+        musicPlayingWaves.classList.remove('flex');
+        iconMusicPaused.classList.remove('hidden');
+        musicStatusText.textContent = 'Nhạc nền';
+        musicStatusText.classList.remove('text-amberGold-800');
+        btnMusic.classList.remove('bg-amberGold-100', 'border-amberGold-500');
+      }
+    }
+
+    let autoPlayTriggered = false;
+    function tryAutoPlayMusic() {
+      if (autoPlayTriggered || userPausedMusicManually) return;
+      bgMusic.play().then(() => {
+        autoPlayTriggered = true;
+        updateMusicUI(true);
+      }).catch(() => {});
+    }
+
+    ['click', 'touchstart', 'scroll'].forEach(evt => {
+      document.addEventListener(evt, () => tryAutoPlayMusic(), { once: true, passive: true });
+    });
+
+    btnMusic.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (bgMusic.paused) {
+        userPausedMusicManually = false;
+        bgMusic.play().then(() => updateMusicUI(true));
+      } else {
+        userPausedMusicManually = true;
+        bgMusic.pause();
+        updateMusicUI(false);
+      }
+    });
+
+    /* =========================================================
+       2. TƯƠNG TÁC GIỮA VIDEO VÀ NHẠC NỀN
+       ========================================================= */
+    const tributeVideo = document.getElementById('tribute-video');
+    const videoOverlay = document.getElementById('video-overlay');
+    const videoWrapper = document.getElementById('video-wrapper');
+    const btnRatio169 = document.getElementById('btn-ratio-16-9');
+    const btnRatio916 = document.getElementById('btn-ratio-9-16');
+
+    videoOverlay.addEventListener('click', () => {
+      videoOverlay.style.opacity = '0';
+      setTimeout(() => videoOverlay.style.display = 'none', 300);
+      tributeVideo.play().catch(err => {
+        console.log('Video error:', err);
+        videoOverlay.style.display = 'flex';
+        videoOverlay.style.opacity = '1';
+      });
+    });
+
+    tributeVideo.addEventListener('play', () => {
+      if (!bgMusic.paused) {
+        wasMusicPlayingBeforeVideo = true;
+        bgMusic.pause();
+        updateMusicUI(false);
+      }
+    });
+
+    tributeVideo.addEventListener('pause', () => {
+      if (tributeVideo.currentTime < tributeVideo.duration) {
+        videoOverlay.style.display = 'flex';
+        setTimeout(() => videoOverlay.style.opacity = '1', 10);
+      }
+      if (wasMusicPlayingBeforeVideo && !userPausedMusicManually) {
+        bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+      }
+    });
+
+    tributeVideo.addEventListener('ended', () => {
+      videoOverlay.style.display = 'flex';
+      setTimeout(() => videoOverlay.style.opacity = '1', 10);
+      if (wasMusicPlayingBeforeVideo && !userPausedMusicManually) {
+        bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+      }
+    });
+
+    btnRatio169.addEventListener('click', () => {
+      videoWrapper.classList.remove('video-ratio-9-16');
+      videoWrapper.classList.add('video-ratio-16-9');
+      btnRatio169.classList.replace('bg-cream-200', 'bg-deepNavy-900');
+      btnRatio169.classList.replace('text-slate-700', 'text-amberGold-300');
+      btnRatio916.classList.replace('bg-deepNavy-900', 'bg-cream-200');
+      btnRatio916.classList.replace('text-amberGold-300', 'text-slate-700');
+    });
+
+    btnRatio916.addEventListener('click', () => {
+      videoWrapper.classList.remove('video-ratio-16-9');
+      videoWrapper.classList.add('video-ratio-9-16');
+      btnRatio916.classList.replace('bg-cream-200', 'bg-deepNavy-900');
+      btnRatio916.classList.replace('text-slate-700', 'text-amberGold-300');
+      btnRatio169.classList.replace('bg-deepNavy-900', 'bg-cream-200');
+      btnRatio169.classList.replace('text-amberGold-300', 'text-slate-700');
+    });
+
+    document.getElementById('admin-video-file').addEventListener('change', (e) => {
+      if (!isAdmin) return;
+      const file = e.target.files[0];
+      if (file) {
+        const fileUrl = URL.createObjectURL(file);
+        tributeVideo.src = fileUrl;
+        videoOverlay.style.display = 'none';
+        tributeVideo.play();
+        alert('Đã cập nhật video thành công!');
+      }
+    });
+
+    const adminYtBox = document.getElementById('admin-yt-box');
+    document.getElementById('admin-btn-toggle-yt').addEventListener('click', () => {
+      if (!isAdmin) return;
+      adminYtBox.classList.toggle('hidden');
+    });
+
+    document.getElementById('admin-yt-submit').addEventListener('click', () => {
+      if (!isAdmin) return;
+      const val = document.getElementById('admin-yt-input').value.trim();
+      if (!val) return;
+      let vid = val;
+      const m = val.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      if (m) vid = m[1];
+
+      if (!bgMusic.paused) {
+        bgMusic.pause();
+        updateMusicUI(false);
+      }
+
+      videoWrapper.innerHTML = `
+        <iframe 
+          src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1" 
+          title="Thước Phim Tri Ân 20/11" 
+          class="w-full h-full rounded-2xl" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      `;
+      adminYtBox.classList.add('hidden');
+      alert('Đã nhúng video YouTube thành công!');
+    });
+
+    /* =========================================================
+       3. CANVAS: CÁNH HOA VÀNG BAY
+       ========================================================= */
+    const canvas = document.getElementById('petals-canvas');
+    const ctx = canvas.getContext('2d');
+    let petalsEnabled = true;
+    let petals = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Petal {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = -20 - Math.random() * 50;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 1.2 + 0.8;
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = (Math.random() - 0.5) * 2;
+        this.colorType = Math.random();
+        this.opacity = Math.random() * 0.5 + 0.3;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.015) * 0.7 + this.speedX;
+        this.rotation += this.rotSpeed;
+        if (this.y > canvas.height + 20 || this.x < -30 || this.x > canvas.width + 30) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.globalAlpha = this.opacity;
+        if (this.colorType < 0.6) ctx.fillStyle = '#F59E0B';
+        else if (this.colorType < 0.85) ctx.fillStyle = '#D97706';
+        else ctx.fillStyle = '#EF4444';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size, this.size * 0.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const count = window.innerWidth < 640 ? 18 : 28;
+    for (let i = 0; i < count; i++) {
+      const p = new Petal();
+      p.y = Math.random() * canvas.height;
+      petals.push(p);
+    }
+
+    function animatePetals() {
+      if (!petalsEnabled) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of petals) {
+        p.update();
+        p.draw();
+      }
+      requestAnimationFrame(animatePetals);
+    }
+    requestAnimationFrame(animatePetals);
+
+    const btnPetals = document.getElementById('btn-petals');
+    btnPetals.addEventListener('click', () => {
+      petalsEnabled = !petalsEnabled;
+      btnPetals.classList.toggle('text-slate-400', !petalsEnabled);
+      btnPetals.classList.toggle('text-amberGold-700', petalsEnabled);
+      if (petalsEnabled) requestAnimationFrame(animatePetals);
+    });
+
+    /* =========================================================
+       4. CAROUSEL ALBUM ẢNH (LƯỚT QUA ĐỂ XEM)
+       ========================================================= */
+    const defaultPhotos = [
+      {
+        src: 'anh-lop-11-1.jpg',
+        title: 'Thanh xuân của 11/1 dưới mái trường thân yêu',
+        subtitle: 'Ảnh tập thể Lớp 11/1 • THPT Hà Trung'
+      },
+      {
+        src: 'anh-lop-2.jpg',
+        title: 'Những tiết học say mê & Nụ cười bảng đen',
+        subtitle: 'Bụi phấn nghiêng nghiêng theo từng bài giảng'
+      },
+      {
+        src: 'anh-lop-3.jpg',
+        title: 'Hội thi Tri Ân 20/11 - Tự hào 11B1',
+        subtitle: 'B1 - Beating As One • Nhiệt huyết tuổi trẻ'
+      },
+      {
+        src: 'anh-lop-4.jpg',
+        title: 'Khoảnh khắc ấm áp bên Thầy Cô kính yêu',
+        subtitle: 'Tình nghĩa thầy trò son sắt không phai'
+      }
+    ];
+
+    let photosData = JSON.parse(localStorage.getItem('photos_11_1') || 'null') || defaultPhotos;
+    let currentSlide = 0;
+    const sliderTrack = document.getElementById('slider-track');
+    const dotsContainer = document.getElementById('carousel-dots');
+    const adminCurrentSlideBadge = document.getElementById('admin-current-slide-badge');
+
+    function renderCarousel() {
+      if (currentSlide >= photosData.length) currentSlide = Math.max(0, photosData.length - 1);
+
+      sliderTrack.innerHTML = '';
+      dotsContainer.innerHTML = '';
+
+      photosData.forEach((item, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'slider-item px-1';
+        slide.innerHTML = `
+          <div class="polaroid-frame bg-white p-3.5 sm:p-4 rounded-xl border border-cream-200 cursor-pointer group" onclick="openLightbox(${idx})">
+            <div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-900 border border-slate-100">
+              <img 
+                id="photo-slot-${idx}"
+                src="${item.src}" 
+                alt="${escapeHTML(item.title)}" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80';"
+              >
+              <span class="absolute top-2 left-2 bg-deepNavy-900/80 text-amberGold-300 text-[10px] px-2 py-0.5 rounded-full font-mono">${idx + 1}/${photosData.length}</span>
+              <span class="absolute bottom-2 right-2 bg-deepNavy-900/80 text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 opacity-90">
+                🔍 Phóng to
+              </span>
+            </div>
+            <div class="pt-3 pb-1 text-center">
+              <p class="font-script text-2xl sm:text-3xl text-deepNavy-900 font-bold leading-tight">
+                ${escapeHTML(item.title)}
+              </p>
+              <p class="text-[11px] text-slate-500 mt-0.5 font-medium">${escapeHTML(item.subtitle)}</p>
+            </div>
+          </div>
+        `;
+        sliderTrack.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.className = idx === currentSlide ? 'w-6 h-2 rounded-full bg-amberGold-600 transition-all' : 'w-2 h-2 rounded-full bg-slate-300 transition-all';
+        dot.onclick = () => goToSlide(idx);
+        dotsContainer.appendChild(dot);
+      });
+
+      updateSlidePosition();
+    }
+
+    function updateSlidePosition() {
+      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+      const dots = dotsContainer.children;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = i === currentSlide ? 'w-6 h-2 rounded-full bg-amberGold-600 transition-all' : 'w-2 h-2 rounded-full bg-slate-300 transition-all';
+      }
+      if (adminCurrentSlideBadge) {
+        adminCurrentSlideBadge.textContent = `${currentSlide + 1} / ${photosData.length}`;
+      }
+    }
+
+    function goToSlide(idx) {
+      currentSlide = idx;
+      updateSlidePosition();
+    }
+
+    document.getElementById('btn-prev-slide').addEventListener('click', () => {
+      if (photosData.length === 0) return;
+      currentSlide = (currentSlide - 1 + photosData.length) % photosData.length;
+      updateSlidePosition();
+    });
+
+    document.getElementById('btn-next-slide').addEventListener('click', () => {
+      if (photosData.length === 0) return;
+      currentSlide = (currentSlide + 1) % photosData.length;
+      updateSlidePosition();
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const carouselEl = document.getElementById('carousel-container');
+    carouselEl.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    carouselEl.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 40) {
+        if (diff < 0) currentSlide = (currentSlide + 1) % photosData.length;
+        else currentSlide = (currentSlide - 1 + photosData.length) % photosData.length;
+        updateSlidePosition();
+      }
+    }, { passive: true });
+
+    // Lightbox modal
+    const photoModal = document.getElementById('photo-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+
+    function openLightbox(idx) {
+      if (photosData[idx]) {
+        modalImg.src = photosData[idx].src;
+        modalCaption.textContent = photosData[idx].title || "Kỷ niệm lớp 11/1";
+        photoModal.classList.remove('hidden');
+        setTimeout(() => photoModal.classList.remove('opacity-0'), 10);
+      }
+    }
+
+    function closeModal() {
+      photoModal.classList.add('opacity-0');
+      setTimeout(() => photoModal.classList.add('hidden'), 300);
+    }
+    document.getElementById('btn-close-modal').addEventListener('click', closeModal);
+    photoModal.addEventListener('click', (e) => {
+      if (e.target === photoModal || e.target === modalImg) closeModal();
+    });
+
+    // ADMIN QUẢN TRỊ ẢNH
+    document.getElementById('admin-replace-current-photo').addEventListener('change', (e) => {
+      if (!isAdmin) return;
+      const file = e.target.files[0];
+      if (file && photosData[currentSlide]) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          photosData[currentSlide].src = event.target.result;
+          localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+          renderCarousel();
+          alert('Đã cập nhật ảnh thành công!');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('admin-add-new-photo').addEventListener('change', (e) => {
+      if (!isAdmin) return;
+      const file = e.target.files[0];
+      if (file) {
+        const title = prompt('Nhập tiêu đề cho bức ảnh mới:', 'Kỷ niệm thanh xuân 11/1') || 'Kỷ niệm thanh xuân 11/1';
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          photosData.push({
+            src: event.target.result,
+            title: title,
+            subtitle: 'Khoảnh khắc lớp 11/1'
+          });
+          localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+          currentSlide = photosData.length - 1;
+          renderCarousel();
+          alert('Đã thêm ảnh mới vào Album!');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('admin-btn-edit-caption').addEventListener('click', () => {
+      if (!isAdmin || !photosData[currentSlide]) return;
+      const newTitle = prompt('Nhập tiêu đề mới cho bức ảnh:', photosData[currentSlide].title);
+      if (newTitle !== null && newTitle.trim() !== '') {
+        photosData[currentSlide].title = newTitle.trim();
+        const newSub = prompt('Nhập chú thích phụ:', photosData[currentSlide].subtitle) || '';
+        photosData[currentSlide].subtitle = newSub.trim();
+        localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+        renderCarousel();
+      }
+    });
+
+    document.getElementById('admin-btn-delete-photo').addEventListener('click', () => {
+      if (!isAdmin) return;
+      if (photosData.length <= 1) {
+        alert('Cần giữ lại ít nhất 1 bức ảnh trong Album!');
+        return;
+      }
+      if (confirm(`Bạn có chắc chắn muốn xóa ảnh số ${currentSlide + 1} khỏi Album không?`)) {
+        photosData.splice(currentSlide, 1);
+        if (currentSlide >= photosData.length) currentSlide = photosData.length - 1;
+        localStorage.setItem('photos_11_1', JSON.stringify(photosData));
+        renderCarousel();
+        alert('Đã xóa ảnh thành công!');
+      }
+    });
+
+    document.getElementById('admin-btn-edit-quote').addEventListener('click', () => {
+      if (!isAdmin) return;
+      const quoteBox = document.getElementById('quote-content-display');
+      const newContent = prompt('Nhập nội dung lời tri ân mới:', quoteBox.innerText);
+      if (newContent !== null && newContent.trim() !== '') {
+        quoteBox.innerHTML = `<p>${escapeHTML(newContent).replace(/\n/g, '<br>')}</p>`;
+        localStorage.setItem('custom_quote_11_1', quoteBox.innerHTML);
+        alert('Đã cập nhật lời tri ân!');
+      }
+    });
+    const savedQuote = localStorage.getItem('custom_quote_11_1');
+    if (savedQuote) document.getElementById('quote-content-display').innerHTML = savedQuote;
+
+    /* =========================================================
+       5. THẢ TIM TRI ÂN
+       ========================================================= */
+    let heartCount = parseInt(localStorage.getItem('hearts_11_1') || '1101');
+    const btnHeart = document.getElementById('btn-heart-burst');
+    const heartDisplay = document.getElementById('heart-count');
+    const burstContainer = document.getElementById('heart-burst-container');
+    const emojis = ['❤️', '💖', '💐', '✨', '🌹', '🥰', '🎓', '💛'];
+    heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
+
+    btnHeart.addEventListener('click', (e) => {
+      heartCount++;
+      heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
+      localStorage.setItem('hearts_11_1', heartCount.toString());
+      const rect = btnHeart.getBoundingClientRect();
+      const ox = rect.left + rect.width / 2;
+      const oy = rect.top + rect.height / 2;
+      for (let i = 0; i < 8; i++) spawnParticle(ox, oy);
+    });
+
+    function spawnParticle(x, y) {
+      const el = document.createElement('div');
+      el.className = 'fixed pointer-events-none text-xl sm:text-2xl select-none';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      burstContainer.appendChild(el);
+
+      const dx = x + (Math.random() - 0.5) * 220;
+      const dy = y - (Math.random() * 260 + 100);
+      const rot = (Math.random() - 0.5) * 60;
+      const sc = Math.random() * 0.8 + 1.2;
+
+      const anim = el.animate([
+        { transform: 'translate(0, 0) scale(0.5) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${dx - x}px, ${dy - y}px) scale(${sc}) rotate(${rot}deg)`, opacity: 0 }
+      ], {
+        duration: 1300 + Math.random() * 600,
+        easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)'
+      });
+      anim.onfinish = () => el.remove();
+    }
+
+    /* =========================================================
+       6. SỔ LƯU BÚT GỬI LỜI CHÚC
+       ========================================================= */
+    const defaultWishes = [
+      { name: 'Bạn Minh Quân (Lớp trưởng)', text: 'Chúc cô chủ nhiệm luôn tươi trẻ, nhiều niềm vui và mãi yêu thương đàn con 11/1 này ạ! ❤️', time: 'Hôm nay' },
+      { name: 'Bạn Thu Hà', text: 'Cảm ơn thầy cô đã luôn bao dung và ân cần. Chúc thầy cô 20/11 ngập tràn hoa tươi và nụ cười! 💐', time: 'Hôm nay' },
+      { name: 'Học sinh 11/1', text: 'Mãi khắc ghi công ơn người thầy, người cô đã trao cho chúng em đôi cánh ước mơ!', time: 'Hôm nay' }
+    ];
+
+    let wishesData = JSON.parse(localStorage.getItem('wishes_11_1') || 'null') || defaultWishes;
+    const formWish = document.getElementById('form-wish');
+    const inputName = document.getElementById('input-wish-name');
+    const inputText = document.getElementById('input-wish-text');
+    const wishesContainer = document.getElementById('wishes-container');
+    const wishesCount = document.getElementById('wishes-count');
+
+    function renderWishes() {
+      wishesContainer.innerHTML = '';
+      wishesCount.textContent = `${wishesData.length} lời chúc`;
+
+      wishesData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'p-2.5 rounded-lg bg-amberGold-50/70 border border-amberGold-200/80 relative group';
+        card.innerHTML = `
+          <div class="flex justify-between items-center font-semibold text-deepNavy-900 mb-0.5">
+            <span>${escapeHTML(item.name)}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] text-amberGold-700 font-normal">${item.time || 'Vừa xong'}</span>
+              ${isAdmin ? `<button onclick="deleteWish(${index})" class="text-rose-500 hover:text-rose-700 text-[10px] font-bold px-1 bg-white rounded border border-rose-200 ml-1">Xóa</button>` : ''}
+            </div>
+          </div>
+          <p class="text-slate-700">${escapeHTML(item.text)}</p>
+        `;
+        wishesContainer.appendChild(card);
+      });
+    }
+
+    window.deleteWish = function(index) {
+      if (!isAdmin) return;
+      if (confirm('Xóa lời chúc này khỏi sổ lưu bút?')) {
+        wishesData.splice(index, 1);
+        localStorage.setItem('wishes_11_1', JSON.stringify(wishesData));
+        renderWishes();
+      }
+    };
+
+    formWish.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = inputName.value.trim();
+      const text = inputText.value.trim();
+      if (!name || !text) return;
+
+      wishesData.unshift({ name, text, time: 'Vừa xong' });
+      localStorage.setItem('wishes_11_1', JSON.stringify(wishesData));
+      renderWishes();
+
+      const r = formWish.getBoundingClientRect();
+      spawnParticle(r.left + r.width / 2, r.top);
+      inputName.value = '';
+      inputText.value = '';
+    });
+
+    /* =========================================================
+       7. NÚT CHIA SẺ & CUỘN TRANG (FADE IN)
+       ========================================================= */
+    document.getElementById('btn-share').addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Tri Ân Ngày Nhà Giáo Việt Nam 20/11 - Tập Thể 11/1',
+            text: 'Gửi người lái đò thầm lặng - Thước phim tri ân từ tập thể lớp 11/1!',
+            url: window.location.href,
+          });
+        } catch (err) {}
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Đã sao chép liên kết trang web vào bộ nhớ tạm!');
+      }
+    });
+
+    function escapeHTML(str) {
+      return (str || '').replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+    }
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => observer.observe(el));
+
+    // Khởi tạo trang
+    setAdminState(isAdmin);
+  </script>
+</body>
+</html>
