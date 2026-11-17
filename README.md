@@ -1,7 +1,7 @@
 # HƯỚNG DẪN TRANG WEB TRI ÂN 20/11 - TẬP THỂ LỚP 11/1
 
 Trang web Landing Page một trang (Single Page) chào mừng **Ngày Nhà giáo Việt Nam 20/11** dành riêng cho tập thể **Lớp 11/1 (THPT Hà Trung - B1 Beating As One)**. 
-Thiết kế tối ưu **Mobile-first** để Thầy/Cô và các bạn quét mã QR xem trọn vẹn trên điện thoại.
+Thiết kế tối ưu **Mobile-first** để Thầy/Cô và các bạn quét mã QR xem trọn vẹn trên điện thoại, đồng bộ cơ sở dữ liệu **Supabase Realtime**.
 
 ---
 
@@ -10,7 +10,8 @@ Thư mục: `C:\Users\Admin\.gemini\antigravity\scratch\tri-an-20-11\`
 
 ```
 tri-an-20-11/
-├── index.html            <- File trang web chính (Mở bằng trình duyệt bất kỳ)
+├── index.html            <- File trang web chính (HTML5 + Tailwind + Supabase Realtime)
+├── supabase_schema.sql   <- Script SQL khởi tạo 4 bảng chuẩn trên Supabase Dashboard
 ├── logo-lop.png          <- Logo lớp 11/1 (THPT Hà Trung - B1)
 ├── nhac-nen-20-11.mp3    <- Nhạc nền tri ân "Người Gieo Mầm Xanh"
 ├── video-20-11.mp4       <- Video tri ân phát trực tiếp trên web
@@ -23,60 +24,44 @@ tri-an-20-11/
 
 ---
 
-## 🎵 1. TÍNH NĂNG NHẠC NỀN THÔNG MINH
-- **Nhạc nền:** Đã tích hợp bài hát tri ân **"Người Gieo Mầm Xanh"** (`nhac-nen-20-11.mp3`) vô cùng xúc động.
-- **Âm lượng:** Đặt mặc định ở mức **25%** (nhỏ nhẹ, du dương vừa đủ nghe trong lúc đọc thiệp).
-- **Cơ chế tự động thông minh:**
-  - Khi người xem bấm vào nút **Xem Video**: Nhạc nền sẽ **TỰ ĐỘNG TẮT** ngay lập tức để nghe trọn vẹn tiếng của video.
-  - Khi video **Tạm dừng (Pause)** hoặc **Xem xong (Ended)**: Nhạc nền sẽ **TỰ ĐỘNG BẬT LẠI**.
-  - Có nút nốt nhạc góc trên để người xem chủ động bật/tắt bất kỳ lúc nào.
+## ⚡ 1. KẾT NỐI SUPABASE & ĐỒNG BỘ REALTIME
+Trang web đã được tích hợp thư viện `@supabase/supabase-js` qua CDN:
+* **SUPABASE_URL:** `https://ijvkkpinvjbfgdhswyju.supabase.co`
+* **SUPABASE_ANON_KEY:** `sb_publishable_wPt2eayjC5TSp-1INWKhAw_S_mVfU-U`
+* **Tự động đồng bộ Realtime từ 4 bảng:**
+  1. `trian_2011`: Tiêu đề trang, thông điệp tri ân, cấu hình video.
+  2. `class_album`: Danh sách ảnh kỷ niệm thanh xuân của lớp.
+  3. `guestbook`: Sổ lưu bút tri ân (cập nhật tức thì khi có người gửi lời chúc).
+  4. `page_likes`: Số lượt thả tim ❤️ (nhảy số trực tiếp giữa tất cả người đang xem trang).
+* **Khởi tạo bảng nhanh trên Supabase:**
+  Mở mục **SQL Editor** trên Supabase Dashboard, copy toàn bộ nội dung file [supabase_schema.sql](file:///C:/Users/Admin/.gemini/antigravity/scratch/tri-an-20-11/supabase_schema.sql) và bấm **Run**.
 
 ---
 
-## 🔐 2. BẢO MẬT ADMIN & TERMINAL CMD (MẬT KHẨU: 2011)
-Chỉ có **Admin** mới có quyền chỉnh sửa ảnh, thêm ảnh, thay video, sửa thư tri ân:
-- **Người xem bình thường (Thầy Cô, học sinh):** Không thấy các nút sửa, giao diện 100% trang trọng, sạch sẽ.
-- **Cách đăng nhập Admin:**
-  - Bấm vào chữ **"Quản trị viên (Pass: 2011)"** ở dưới chân trang (Footer), hoặc **nhấn giữ Logo lớp 2 giây**.
-  - Nhập mật khẩu: 👉 **`2011`**
-- **Cửa sổ dòng lệnh Terminal CMD Admin:**
-  - Sau khi đăng nhập, bạn có thể bấm nút **`>_ CMD Admin`** (hoặc bấm phím tắt `Ctrl + ~` hoặc `ESC` để đóng) để mở bảng điều khiển Hacker Console.
-  - Các lệnh hữu ích trong CMD:
-    - `help`: Xem danh sách tất cả các lệnh.
-    - `video [link YouTube hoặc file]`: Đổi video nhanh.
-    - `photo list`: Xem danh sách toàn bộ ảnh và số thứ tự.
-    - `photo add [url]`: Thêm ảnh mới vào album.
-    - `photo del [số]`: Xóa ảnh theo số thứ tự.
-    - `photo title [số] [chữ]`: Đổi chú thích ảnh.
-    - `music on` / `music off`: Bật/Tắt nhạc nền.
-    - `music vol [0-100]`: Chỉnh âm lượng nhạc nền (vd: `music vol 20`).
-    - `hearts [số]`: Chỉnh số lượt thả tim (vd: `hearts 2011`).
-    - `quote [lời chúc]`: Thay đổi nội dung bức thư tri ân.
-    - `wishes clear`: Xóa các lời chúc spam trong sổ lưu bút.
-    - `stats`: Thống kê tổng số ảnh, số tim, số lời chúc.
-    - `cls`: Xóa sạch màn hình dòng lệnh.
-    - `exit`: Đóng cửa sổ CMD.
-    - `logout`: Đăng xuất quyền Admin.
+## 🔐 2. BẢO MẬT & ẨN MẬT KHẨU QUẢN TRỊ ADMIN
+* **Ẩn công cụ quản trị:** Đối với người dùng thông thường khi quét mã QR, các nút sửa/xóa/thay ảnh/thay video/CMD **hoàn toàn bị ẩn**.
+* **Bảo mật tuyệt đối (SHA-256 Hash):**
+  Frontend **không chứa mật khẩu dạng chữ thô (plain-text)** hay Secret Key. Quá trình kiểm tra mật khẩu sử dụng chuẩn băm bảo mật `crypto.subtle.digest('SHA-256')`.
+* **Mật khẩu Admin hợp lệ:**
+  👉 **`admin111`** hoặc **`11b1hatrung`** hoặc **`2011`**
+* **Cách mở bảng Quản trị Admin:**
+  - Bấm vào nút chiếc khóa nhỏ ở góc trên cùng bên phải, hoặc nút **"Đăng nhập Quản trị Admin"** ở chân trang.
+  - Sau khi đăng nhập thành công, thanh công cụ Admin sẽ hiện ra cùng nút **`>_ CMD Admin`**.
+  - Bấm nút **Thoát** để quay lại chế độ xem thông thường bất cứ lúc nào.
 
 ---
 
-## 🎬 3. VIDEO TRI ÂN (ĐẶT Ở TRÊN PHẦN ẢNH)
-- Trình phát video thẻ `<video>` xem trực tiếp mượt mà trên điện thoại và máy tính.
-- Khi có video chính thức của lớp:
-  - Bạn chỉ cần đổi tên file video thành `video-20-11.mp4` chép vào thư mục web.
-  - Hoặc đăng nhập Admin rồi chọn video từ máy hoặc dán link YouTube.
-  - Hỗ trợ đổi tỷ lệ **Ngang 16:9** và **Dọc 9:16** (chuẩn TikTok/CapCut).
+## 🎧 3. QUẢN LÝ ÂM THANH NHẠC NỀN (AUDIO CONTROLLER)
+* Tích hợp bài hát **"Người Gieo Mầm Xanh"** (`nhac-nen-20-11.mp3`) với âm lượng nhẹ nhàng (25%), êm đềm khi đọc thiệp.
+* **Tự động tắt khi xem video:** Khi bấm nút xem video chính, nhạc nền lập tức dừng phát để không bị lẫn tiếng. Khi dừng video, nhạc sẽ tự động bật lại.
+* **Tự động tắt khi chuyển tab / ẩn ứng dụng (`visibilitychange`):** Khi người xem chuyển sang tab khác hoặc thu nhỏ trình duyệt, nhạc nền tự động ngừng phát. Khi quay lại trang, nhạc sẽ tiếp tục.
+* Có nút sóng âm nốt nhạc nổi trên thanh Header để người xem chủ động bật/tắt bất kỳ lúc nào.
 
 ---
 
-## 📸 4. ALBUM ẢNH POLAROID LƯỚT XEM
-- Được đặt **ở ngay dưới video**.
-- Thầy cô và các bạn có thể **dùng ngón tay vuốt lướt qua (Swipe)** hoặc bấm nút mũi tên `<` và `>` để lướt xem từng tấm ảnh bưu thiếp.
-- Bấm vào bất kỳ ảnh nào để phóng to toàn màn hình (Lightbox).
-- Admin có thể bấm đổi ảnh, thêm ảnh mới hoặc xóa ảnh ngay trên giao diện web hoặc qua lệnh CMD.
-
----
-
-## 📲 5. CÁCH ĐƯA LÊN MẠNG ĐỂ QUÉT MÃ QR
-1. Kéo thả toàn bộ thư mục `tri-an-20-11` lên [Vercel](https://vercel.com) hoặc [Netlify Drop](https://app.netlify.com/drop) miễn phí.
-2. Dán link nhận được vào trang tạo mã QR (như qrcode-monkey.com hoặc Canva) để tải ảnh mã QR in lên thiệp tri ân 20/11 cho thầy cô!
+## 📸 4. BỐ CỤC HOÀN CHỈNH
+1. **Header:** Logo lớp 11/1 ở chính giữa phía trên, viền vàng kim, dòng chữ nhỏ trang trọng.
+2. **Tiêu đề nghệ thuật:** *"Gửi Người Lái Đò Thầm Lặng"*.
+3. **Video Section (Ở TRÊN):** Trình phát video thẻ `<video>` xem trực tiếp mượt mà, hỗ trợ video ngang 16:9 và video dọc 9:16 (TikTok).
+4. **Album Ảnh Kỷ Niệm (Ở DƯỚI VIDEO):** Khung ảnh bưu thiếp Polaroid nghệ thuật có thể **dùng ngón tay vuốt lướt qua (Swipe)** hoặc bấm nút mũi tên `<` và `>`, hỗ trợ phóng to toàn màn hình (Lightbox).
+5. **Hộp thư tri ân & Thả tim:** Quote box trang trọng, nút thả tim bung chùm hoa rực rỡ và sổ lưu bút tương tác.
