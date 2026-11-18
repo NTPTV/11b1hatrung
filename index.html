@@ -866,17 +866,15 @@
     const btnRatio916 = document.getElementById('btn-ratio-9-16');
 
     videoOverlay.addEventListener('click', () => {
-      videoOverlay.style.opacity = '0';
-      setTimeout(() => videoOverlay.style.display = 'none', 300);
+      videoOverlay.style.display = 'none';
       tributeVideo.play().catch(err => {
         console.log('Video error:', err);
-        videoOverlay.style.display = 'flex';
-        videoOverlay.style.opacity = '1';
       });
     });
 
-    // Khi video bắt đầu phát -> TẮT NGAY NHẠC NỀN
+    // Khi video bắt đầu phát -> TẮT NGAY NHẠC NỀN & ẩn overlay
     tributeVideo.addEventListener('play', () => {
+      videoOverlay.style.display = 'none';
       if (!bgMusic.paused) {
         wasMusicPlayingBeforeVideo = true;
         bgMusic.pause();
@@ -886,19 +884,15 @@
 
     // Khi video tạm dừng -> BẬT LẠI NHẠC NỀN
     tributeVideo.addEventListener('pause', () => {
-      if (tributeVideo.currentTime < tributeVideo.duration) {
-        videoOverlay.style.display = 'flex';
-        setTimeout(() => videoOverlay.style.opacity = '1', 10);
-      }
       if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
         bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
       }
     });
 
-    // Khi video xem xong -> BẬT LẠI NHẠC NỀN
+    // Khi video xem xong -> BẬT LẠI NHẠC NỀN & hiện lại overlay
     tributeVideo.addEventListener('ended', () => {
       videoOverlay.style.display = 'flex';
-      setTimeout(() => videoOverlay.style.opacity = '1', 10);
+      videoOverlay.style.opacity = '1';
       if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
         bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
       }
@@ -977,17 +971,17 @@
        4. ALBUM ẢNH KỶ NIỆM (11 ẢNH THẬT - BỎ PHẦN TÊN ẢNH RƯỜM RÀ)
        ========================================================= */
     const defaultPhotos = [
-      { id: 1, src: 'album/anh-1.jpg' },
-      { id: 2, src: 'album/anh-2.jpg' },
-      { id: 3, src: 'album/anh-3.jpg' },
-      { id: 4, src: 'album/anh-4.jpg' },
-      { id: 5, src: 'album/anh-5.jpg' },
-      { id: 6, src: 'album/anh-6.jpg' },
-      { id: 7, src: 'album/anh-7.jpg' },
-      { id: 8, src: 'album/anh-8.jpg' },
-      { id: 9, src: 'album/anh-9.jpg' },
-      { id: 10, src: 'album/anh-10.jpg' },
-      { id: 11, src: 'album/anh-11.jpg' }
+      { id: 1, src: 'anh-1.jpg', altSrc: 'album/anh-1.jpg' },
+      { id: 2, src: 'anh-2.jpg', altSrc: 'album/anh-2.jpg' },
+      { id: 3, src: 'anh-3.jpg', altSrc: 'album/anh-3.jpg' },
+      { id: 4, src: 'anh-4.jpg', altSrc: 'album/anh-4.jpg' },
+      { id: 5, src: 'anh-5.jpg', altSrc: 'album/anh-5.jpg' },
+      { id: 6, src: 'anh-6.jpg', altSrc: 'album/anh-6.jpg' },
+      { id: 7, src: 'anh-7.jpg', altSrc: 'album/anh-7.jpg' },
+      { id: 8, src: 'anh-8.jpg', altSrc: 'album/anh-8.jpg' },
+      { id: 9, src: 'anh-9.jpg', altSrc: 'album/anh-9.jpg' },
+      { id: 10, src: 'anh-10.jpg', altSrc: 'album/anh-10.jpg' },
+      { id: 11, src: 'anh-11.jpg', altSrc: 'album/anh-11.jpg' }
     ];
 
     let photosData = defaultPhotos;
@@ -995,6 +989,17 @@
     const sliderTrack = document.getElementById('slider-track');
     const dotsContainer = document.getElementById('carousel-dots');
     const adminCurrentSlideBadge = document.getElementById('admin-current-slide-badge');
+
+    window.handleSlideImgError = function(img, idx) {
+      const item = photosData[idx];
+      if (!item) return;
+      if (!img.dataset.failedOnce && item.altSrc) {
+        img.dataset.failedOnce = 'true';
+        img.src = item.altSrc;
+        const bg = img.previousElementSibling;
+        if (bg && bg.tagName === 'IMG') bg.src = item.altSrc;
+      }
+    };
 
     function renderCarousel() {
       if (currentSlide >= photosData.length) currentSlide = Math.max(0, photosData.length - 1);
@@ -1009,14 +1014,14 @@
           <div class="polaroid-frame bg-white p-3 sm:p-4 rounded-xl border border-cream-200 cursor-pointer group" onclick="openLightbox(${idx})">
             <div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-950 border border-slate-100 flex items-center justify-center">
               <!-- Nền mờ nghệ thuật cho cả ảnh dọc và ngang -->
-              <img src="${item.src}" class="absolute inset-0 w-full h-full object-cover blur-md opacity-35 scale-110 pointer-events-none">
+              <img src="${item.src}" class="absolute inset-0 w-full h-full object-cover blur-md opacity-35 scale-110 pointer-events-none" onerror="this.src='${item.altSrc || item.src}';">
               <!-- Ảnh chính hiển thị trọn vẹn không bị cắt đầu/chân -->
               <img 
                 id="photo-slot-${idx}"
                 src="${item.src}" 
-                alt="Ảnh kỷ niệm 11/1" 
+                alt="Ảnh kỷ niệm 11/1 số ${idx + 1}" 
                 class="relative z-10 max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                onerror="this.src='anh-lop-11-1.jpg';"
+                onerror="window.handleSlideImgError(this, ${idx});"
               >
               <span class="absolute top-2 left-2 z-20 bg-deepNavy-900/85 text-amberGold-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono shadow-sm">${idx + 1}/${photosData.length}</span>
               <span class="absolute bottom-2 right-2 z-20 bg-deepNavy-900/85 text-white text-[10px] px-2.5 py-0.5 rounded-full flex items-center gap-1 opacity-90 shadow-sm">
@@ -1087,7 +1092,8 @@
 
     function openLightbox(idx) {
       if (photosData[idx]) {
-        modalImg.src = photosData[idx].src;
+        const slot = document.getElementById(`photo-slot-${idx}`);
+        modalImg.src = slot ? slot.src : photosData[idx].src;
         photoModal.classList.remove('hidden');
         setTimeout(() => photoModal.classList.remove('opacity-0'), 10);
       }
