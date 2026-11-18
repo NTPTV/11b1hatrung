@@ -18,6 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -334,10 +337,21 @@
 
             <div id="video-wrapper" class="relative rounded-2xl overflow-hidden bg-deepNavy-950 shadow-2xl border-2 border-amberGold-400/80 video-ratio-16-9 transition-all duration-500 flex items-center justify-center">
               
-              <!-- Direct Video Player -->
+              <!-- Direct YouTube Video Player -->
+              <iframe 
+                id="yt-tribute-video"
+                class="w-full h-full rounded-2xl" 
+                src="https://www.youtube.com/embed/g3mcwR-Td7s?enablejsapi=1&rel=0&modestbranding=1" 
+                title="Thước Phim Tri Ân 20/11 - Tập Thể Lớp 11/1" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+              </iframe>
+
+              <!-- Fallback Direct HTML5 Video Player (Khi Admin đổi sang video từ máy) -->
               <video 
                 id="tribute-video"
-                class="w-full h-full object-cover"
+                class="hidden w-full h-full object-cover"
                 controls 
                 playsinline 
                 webkit-playsinline
@@ -345,23 +359,8 @@
                 poster="anh-lop-11-1.jpg"
               >
                 <source src="video-20-11.mp4" type="video/mp4">
-                Trình duyệt của bạn có thể phát trực tiếp thẻ video này.
               </video>
 
-              <!-- Touch-to-Play Overlay -->
-              <div id="video-overlay" class="absolute inset-0 bg-deepNavy-950/50 backdrop-blur-[1px] flex flex-col items-center justify-center cursor-pointer transition-opacity duration-300 z-10 p-4 text-center">
-                <button class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-amberGold-600 to-amberGold-400 text-deepNavy-900 flex items-center justify-center shadow-xl shadow-amberGold-500/40 hover:scale-105 active:scale-95 transition-transform duration-200 mb-2.5">
-                  <svg class="w-8 h-8 ml-1 fill-current" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </button>
-                <span class="text-cream-50 font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full bg-deepNavy-900/90 border border-amberGold-500/40 shadow whitespace-nowrap">
-                  Chạm để xem trực tiếp thước phim ▶
-                </span>
-                <span class="text-amberGold-300/85 text-[10px] mt-1.5 balance-text">
-                  (Nhạc nền sẽ tự động tắt khi xem video)
-                </span>
-              </div>
             </div>
           </div>
 
@@ -857,46 +856,81 @@
     });
 
     /* =========================================================
-       3. TƯƠNG TÁC GIỮA VIDEO VÀ NHẠC NỀN
+       3. TƯƠNG TÁC GIỮA VIDEO YOUTUBE VÀ NHẠC NỀN
        ========================================================= */
-    const tributeVideo = document.getElementById('tribute-video');
-    const videoOverlay = document.getElementById('video-overlay');
     const videoWrapper = document.getElementById('video-wrapper');
     const btnRatio169 = document.getElementById('btn-ratio-16-9');
     const btnRatio916 = document.getElementById('btn-ratio-9-16');
+    const tributeVideo = document.getElementById('tribute-video');
+    let ytPlayer = null;
 
-    videoOverlay.addEventListener('click', () => {
-      videoOverlay.style.display = 'none';
-      tributeVideo.play().catch(err => {
-        console.log('Video error:', err);
+    window.onYouTubeIframeAPIReady = function() {
+      try {
+        ytPlayer = new YT.Player('yt-tribute-video', {
+          events: {
+            'onStateChange': onYtStateChange
+          }
+        });
+      } catch (e) {
+        console.log('YT API init:', e);
+      }
+    };
+
+    function onYtStateChange(event) {
+      // 1 = PLAYING
+      if (event.data === 1) {
+        if (!bgMusic.paused) {
+          wasMusicPlayingBeforeVideo = true;
+          bgMusic.pause();
+          updateMusicUI(false);
+        }
+      } else if (event.data === 2 || event.data === 0) {
+        // 2 = PAUSED, 0 = ENDED
+        if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
+          bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+        }
+      }
+    }
+
+    // PostMessage listener dự phòng khi xem YouTube
+    window.addEventListener('message', (e) => {
+      try {
+        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+        if (data && data.event === 'onStateChange') {
+          if (data.info === 1) {
+            if (!bgMusic.paused) {
+              wasMusicPlayingBeforeVideo = true;
+              bgMusic.pause();
+              updateMusicUI(false);
+            }
+          } else if (data.info === 2 || data.info === 0) {
+            if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
+              bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+            }
+          }
+        }
+      } catch (_) {}
+    });
+
+    if (tributeVideo) {
+      tributeVideo.addEventListener('play', () => {
+        if (!bgMusic.paused) {
+          wasMusicPlayingBeforeVideo = true;
+          bgMusic.pause();
+          updateMusicUI(false);
+        }
       });
-    });
-
-    // Khi video bắt đầu phát -> TẮT NGAY NHẠC NỀN & ẩn overlay
-    tributeVideo.addEventListener('play', () => {
-      videoOverlay.style.display = 'none';
-      if (!bgMusic.paused) {
-        wasMusicPlayingBeforeVideo = true;
-        bgMusic.pause();
-        updateMusicUI(false);
-      }
-    });
-
-    // Khi video tạm dừng -> BẬT LẠI NHẠC NỀN
-    tributeVideo.addEventListener('pause', () => {
-      if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
-        bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
-      }
-    });
-
-    // Khi video xem xong -> BẬT LẠI NHẠC NỀN & hiện lại overlay
-    tributeVideo.addEventListener('ended', () => {
-      videoOverlay.style.display = 'flex';
-      videoOverlay.style.opacity = '1';
-      if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
-        bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
-      }
-    });
+      tributeVideo.addEventListener('pause', () => {
+        if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
+          bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+        }
+      });
+      tributeVideo.addEventListener('ended', () => {
+        if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
+          bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
+        }
+      });
+    }
 
     btnRatio169.addEventListener('click', () => {
       videoWrapper.classList.remove('video-ratio-9-16');
@@ -922,10 +956,26 @@
       const file = e.target.files[0];
       if (file) {
         const fileUrl = URL.createObjectURL(file);
-        tributeVideo.src = fileUrl;
-        videoOverlay.style.display = 'none';
-        tributeVideo.play();
-        alert('Đã cập nhật video thành công!');
+        videoWrapper.innerHTML = `
+          <video 
+            id="tribute-video"
+            class="w-full h-full object-cover rounded-2xl" 
+            controls 
+            playsinline 
+            webkit-playsinline
+            autoplay
+            src="${fileUrl}"
+          ></video>
+        `;
+        const newVid = document.getElementById('tribute-video');
+        newVid.addEventListener('play', () => {
+          if (!bgMusic.paused) {
+            wasMusicPlayingBeforeVideo = true;
+            bgMusic.pause();
+            updateMusicUI(false);
+          }
+        });
+        alert('Đã cập nhật video từ máy thành công!');
       }
     });
 
@@ -957,7 +1007,8 @@
     function applyYoutubeVideo(vid) {
       videoWrapper.innerHTML = `
         <iframe 
-          src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1" 
+          id="yt-tribute-video"
+          src="https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1" 
           title="Thước Phim Tri Ân 20/11" 
           class="w-full h-full rounded-2xl" 
           frameborder="0" 
@@ -965,23 +1016,30 @@
           allowfullscreen>
         </iframe>
       `;
+      try {
+        if (window.YT && YT.Player) {
+          ytPlayer = new YT.Player('yt-tribute-video', {
+            events: { 'onStateChange': onYtStateChange }
+          });
+        }
+      } catch (_) {}
     }
 
     /* =========================================================
-       4. ALBUM ẢNH KỶ NIỆM (11 ẢNH THẬT - BỎ PHẦN TÊN ẢNH RƯỜM RÀ)
+       4. ALBUM ẢNH KỶ NIỆM (THƯ MỤC HÌNH ẢNH: hinhanh/)
        ========================================================= */
     const defaultPhotos = [
-      { id: 1, src: 'anh-1.jpg', altSrc: 'album/anh-1.jpg' },
-      { id: 2, src: 'anh-2.jpg', altSrc: 'album/anh-2.jpg' },
-      { id: 3, src: 'anh-3.jpg', altSrc: 'album/anh-3.jpg' },
-      { id: 4, src: 'anh-4.jpg', altSrc: 'album/anh-4.jpg' },
-      { id: 5, src: 'anh-5.jpg', altSrc: 'album/anh-5.jpg' },
-      { id: 6, src: 'anh-6.jpg', altSrc: 'album/anh-6.jpg' },
-      { id: 7, src: 'anh-7.jpg', altSrc: 'album/anh-7.jpg' },
-      { id: 8, src: 'anh-8.jpg', altSrc: 'album/anh-8.jpg' },
-      { id: 9, src: 'anh-9.jpg', altSrc: 'album/anh-9.jpg' },
-      { id: 10, src: 'anh-10.jpg', altSrc: 'album/anh-10.jpg' },
-      { id: 11, src: 'anh-11.jpg', altSrc: 'album/anh-11.jpg' }
+      { id: 1, src: 'hinhanh/anh-1.jpg', fallbacks: ['hinhanh/1.jpg', 'anh-1.jpg', 'album/anh-1.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 2, src: 'hinhanh/anh-2.jpg', fallbacks: ['hinhanh/2.jpg', 'anh-2.jpg', 'album/anh-2.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 3, src: 'hinhanh/anh-3.jpg', fallbacks: ['hinhanh/3.jpg', 'anh-3.jpg', 'album/anh-3.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 4, src: 'hinhanh/anh-4.jpg', fallbacks: ['hinhanh/4.jpg', 'anh-4.jpg', 'album/anh-4.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 5, src: 'hinhanh/anh-5.jpg', fallbacks: ['hinhanh/5.jpg', 'anh-5.jpg', 'album/anh-5.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 6, src: 'hinhanh/anh-6.jpg', fallbacks: ['hinhanh/6.jpg', 'anh-6.jpg', 'album/anh-6.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 7, src: 'hinhanh/anh-7.jpg', fallbacks: ['hinhanh/7.jpg', 'anh-7.jpg', 'album/anh-7.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 8, src: 'hinhanh/anh-8.jpg', fallbacks: ['hinhanh/8.jpg', 'anh-8.jpg', 'album/anh-8.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 9, src: 'hinhanh/anh-9.jpg', fallbacks: ['hinhanh/9.jpg', 'anh-9.jpg', 'album/anh-9.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 10, src: 'hinhanh/anh-10.jpg', fallbacks: ['hinhanh/10.jpg', 'anh-10.jpg', 'album/anh-10.jpg', 'anh-lop-11-1.jpg'] },
+      { id: 11, src: 'hinhanh/anh-11.jpg', fallbacks: ['hinhanh/11.jpg', 'anh-11.jpg', 'album/anh-11.jpg', 'anh-lop-11-1.jpg'] }
     ];
 
     let photosData = defaultPhotos;
@@ -992,12 +1050,14 @@
 
     window.handleSlideImgError = function(img, idx) {
       const item = photosData[idx];
-      if (!item) return;
-      if (!img.dataset.failedOnce && item.altSrc) {
-        img.dataset.failedOnce = 'true';
-        img.src = item.altSrc;
+      if (!item || !item.fallbacks) return;
+      let step = parseInt(img.dataset.step || '0');
+      if (step < item.fallbacks.length) {
+        const next = item.fallbacks[step];
+        img.dataset.step = (step + 1).toString();
+        img.src = next;
         const bg = img.previousElementSibling;
-        if (bg && bg.tagName === 'IMG') bg.src = item.altSrc;
+        if (bg && bg.tagName === 'IMG') bg.src = next;
       }
     };
 
@@ -1014,7 +1074,7 @@
           <div class="polaroid-frame bg-white p-3 sm:p-4 rounded-xl border border-cream-200 cursor-pointer group" onclick="openLightbox(${idx})">
             <div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-950 border border-slate-100 flex items-center justify-center">
               <!-- Nền mờ nghệ thuật cho cả ảnh dọc và ngang -->
-              <img src="${item.src}" class="absolute inset-0 w-full h-full object-cover blur-md opacity-35 scale-110 pointer-events-none" onerror="this.src='${item.altSrc || item.src}';">
+              <img src="${item.src}" class="absolute inset-0 w-full h-full object-cover blur-md opacity-35 scale-110 pointer-events-none" onerror="window.handleSlideImgError(this, ${idx});">
               <!-- Ảnh chính hiển thị trọn vẹn không bị cắt đầu/chân -->
               <img 
                 id="photo-slot-${idx}"
