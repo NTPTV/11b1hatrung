@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Tri Ân Ngày Nhà Giáo Việt Nam 20/11 | Tập Thể Lớp 11/1</title>
-  <meta name="description" content="Trang web tri ân Ngày Nhà giáo Việt Nam 20/11 từ Tập thể Lớp 11/1 (THPT Hà Trung - B1) - Gửi Người Lái Đò Thầm Lặng. Đồng bộ Realtime Supabase.">
+  <meta name="description" content="Trang web tri ân Ngày Nhà giáo Việt Nam 20/11 từ Tập thể Lớp 11/1 (THPT Hà Trung - B1 Beating As One) - Gửi Người Lái Đò Thầm Lặng.">
   <meta name="theme-color" content="#0D1B2A">
 
   <!-- Open Graph -->
@@ -70,9 +70,6 @@
     }
   </script>
 
-  <!-- Supabase JS Library (v2) qua CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #0D1B2A; }
@@ -88,6 +85,14 @@
 
     .font-script { font-family: 'Dancing Script', cursive, sans-serif; }
     .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* Cân chỉnh ngắt dòng chữ tự nhiên, chống rớt từ đơn lẻ */
+    .balance-text {
+      text-wrap: balance;
+    }
+    .pretty-text {
+      text-wrap: pretty;
+    }
 
     .polaroid-frame {
       box-shadow: 
@@ -156,7 +161,7 @@
       100% { transform: scaleY(1.2); }
     }
 
-    /* Ẩn mặc định các thành phần Admin đối với người dùng thông thường */
+    /* Ẩn mặc định các thành phần Admin đối với người xem thông thường */
     .admin-only {
       display: none !important;
     }
@@ -180,18 +185,18 @@
   <!-- Mobile-First Container -->
   <div class="w-full max-w-md sm:max-w-lg md:max-w-xl min-h-screen bg-cream-50 text-slate-800 shadow-2xl relative overflow-x-hidden flex flex-col border-x border-amberGold-600/25">
 
-    <!-- ================= ADMIN BANNER (CHỈ HIỂN THỊ KHI ĐĂNG NHẬP ADMIN THÀNH CÔNG) ================= -->
+    <!-- ================= ADMIN BANNER (CHỈ HIỂN THỊ KHI ĐĂNG NHẬP ADMIN) ================= -->
     <div id="admin-top-banner" class="admin-only bg-amberGold-600 text-white px-3 py-1.5 text-xs font-semibold items-center justify-between z-50 shadow-md">
       <div class="flex items-center gap-1.5">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
-        <span>Chế độ Quản trị Admin (Đã xác thực)</span>
+        <span class="truncate">Chế độ Quản trị Admin</span>
       </div>
-      <div class="flex items-center gap-1.5">
+      <div class="flex items-center gap-1.5 shrink-0">
         <!-- Nút Mở Terminal CMD -->
         <button id="btn-open-cmd" class="px-2 py-0.5 rounded bg-black/40 hover:bg-black/60 text-emerald-300 font-mono text-[11px] font-bold active:scale-95 transition flex items-center gap-1 border border-emerald-500/50 shadow-xs">
-          <span>&gt;_ CMD Admin</span>
+          <span>&gt;_ CMD</span>
         </button>
         <!-- Nút Thoát Admin -->
         <button id="btn-admin-logout" class="px-2 py-0.5 rounded bg-black/20 hover:bg-black/30 text-[11px] font-bold active:scale-95 transition">
@@ -200,15 +205,11 @@
       </div>
     </div>
 
-    <!-- ================= TOP NAVIGATION BAR (CÓ NÚT AUDIO & NÚT ADMIN NHỎ GỌN) ================= -->
+    <!-- ================= TOP NAVIGATION BAR ================= -->
     <header class="sticky top-0 z-40 bg-cream-50/90 backdrop-blur-md border-b border-amberGold-600/20 px-3.5 py-2 flex items-center justify-between transition-all">
       <div class="flex items-center space-x-2">
         <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-        <span class="text-[11px] font-bold tracking-wider uppercase text-amberGold-800">20.11 • Tri Ân Thầy Cô</span>
-        <!-- Supabase Live Status Badge -->
-        <span id="supabase-status-badge" class="hidden sm:inline-flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono border border-emerald-300">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Supabase Realtime
-        </span>
+        <span class="text-[11px] font-bold tracking-wider uppercase text-amberGold-800 whitespace-nowrap">20.11 • Tri Ân Thầy Cô</span>
       </div>
 
       <div class="flex items-center space-x-2">
@@ -222,7 +223,7 @@
           <svg id="icon-music-paused" class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.27 4.27c-.4.29-.86.51-1.37.64l1.46 1.46c.86-.34 1.62-.84 2.24-1.46l2.13 2.13L21 20.73 4.27 3zM14 7h4V3h-6v5.18l2 2V7z"/>
           </svg>
-          <span id="music-status-text" class="text-[11px] font-semibold text-slate-600">Nhạc nền</span>
+          <span id="music-status-text" class="text-[11px] font-semibold text-slate-600 whitespace-nowrap">Nhạc nền</span>
         </button>
 
         <!-- Petals Toggle -->
@@ -232,7 +233,7 @@
           </svg>
         </button>
 
-        <!-- Nút Đăng Nhập Admin Nhỏ Gọn Ở Header (Bảo Mật) -->
+        <!-- Nút Đăng Nhập Admin Nhỏ Gọn Ở Header -->
         <button id="btn-header-admin-login" class="p-2 rounded-full bg-cream-100 hover:bg-amberGold-100 text-amberGold-700 border border-amberGold-600/30 shadow-xs transition active:scale-95 flex items-center justify-center" title="Đăng nhập Quản trị Admin">
           <svg class="w-4 h-4 text-amberGold-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -251,7 +252,7 @@
     <main class="flex-grow pb-16">
 
       <!-- ================= 1. HEADER SECTION (LOGO LỚP & TIÊU ĐỀ) ================= -->
-      <section class="pt-8 pb-4 px-6 text-center relative overflow-hidden bg-gradient-to-b from-cream-100/90 to-cream-50">
+      <section class="pt-7 pb-4 px-5 text-center relative overflow-hidden bg-gradient-to-b from-cream-100/90 to-cream-50">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-amberGold-300/35 rounded-full blur-3xl pointer-events-none"></div>
 
         <!-- Class Logo -->
@@ -271,26 +272,28 @@
           </div>
         </div>
 
-        <!-- Header Titles -->
-        <div class="relative z-10 space-y-1 reveal">
-          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-deepNavy-900 text-amberGold-300 border border-amberGold-500/40 shadow-xs text-[11px] font-semibold tracking-wider">
-            <span>B1 • BEATING AS ONE • THPT HÀ TRUNG</span>
+        <!-- Header Titles (Cân chỉnh dòng chữ không bị rớt từ) -->
+        <div class="relative z-10 space-y-1.5 reveal">
+          <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-deepNavy-900 text-amberGold-300 border border-amberGold-500/40 shadow-xs text-[11px] font-semibold tracking-wider balance-text">
+            <span>B1 • BEATING AS ONE</span>
+            <span class="text-amberGold-500">•</span>
+            <span>THPT HÀ TRUNG</span>
           </div>
 
           <h2 class="text-xs sm:text-sm uppercase font-extrabold tracking-widest text-deepNavy-900 pt-1">
             TẬP THỂ LỚP 11/1
           </h2>
-          <p class="text-[12px] sm:text-[13px] font-semibold tracking-wider text-amberGold-700 uppercase">
+          <p class="text-[12px] sm:text-[13px] font-semibold tracking-wider text-amberGold-700 uppercase balance-text">
             TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20/11
           </p>
         </div>
 
         <!-- Hero Intro Heading -->
-        <div class="mt-4 pt-3 border-t border-amberGold-600/20 reveal">
-          <h1 id="hero-title-text" class="font-script text-4xl sm:text-5xl text-deepNavy-900 font-bold leading-tight">
+        <div class="mt-4 pt-3.5 border-t border-amberGold-600/20 reveal">
+          <h1 id="hero-title-text" class="font-script text-4xl sm:text-5xl text-deepNavy-900 font-bold leading-tight balance-text px-2">
             Gửi Người Lái Đò Thầm Lặng
           </h1>
-          <p id="hero-subtitle-text" class="text-slate-600 text-xs sm:text-sm font-light mt-1 italic max-w-xs mx-auto">
+          <p id="hero-subtitle-text" class="text-slate-600 text-xs sm:text-sm font-light mt-1.5 italic max-w-sm mx-auto leading-relaxed balance-text px-3">
             “Kính chúc Thầy Cô luôn dồi dào sức khỏe, hạnh phúc và vẹn nguyên ngọn lửa đam mê vì thế hệ tương lai.”
           </p>
         </div>
@@ -306,10 +309,10 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900">
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900 balance-text">
               Thước Phim Tri Ân Từ 11/1
             </h2>
-            <p class="text-xs text-slate-600 mt-0.5">
+            <p class="text-xs text-slate-600 mt-1 max-w-xs mx-auto leading-relaxed balance-text">
               Những ký ức xúc động và trọn vẹn lòng biết ơn gửi Thầy Cô
             </p>
 
@@ -352,17 +355,17 @@
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </button>
-                <span class="text-cream-50 font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full bg-deepNavy-900/90 border border-amberGold-500/40 shadow">
+                <span class="text-cream-50 font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full bg-deepNavy-900/90 border border-amberGold-500/40 shadow whitespace-nowrap">
                   Chạm để xem trực tiếp thước phim ▶
                 </span>
-                <span class="text-amberGold-300/80 text-[10px] mt-1.5">
-                  (Nhạc nền tự động tắt khi xem video)
+                <span class="text-amberGold-300/85 text-[10px] mt-1.5 balance-text">
+                  (Nhạc nền sẽ tự động tắt khi xem video)
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- ADMIN ONLY: KHU VỰC THAY VIDEO DÀNH RIÊNG CHO ADMIN (MẶC ĐỊNH BỊ ẨN) -->
+          <!-- ADMIN ONLY: KHU VỰC THAY VIDEO DÀNH RIÊNG CHO ADMIN -->
           <div class="admin-only mt-3.5 p-3.5 bg-amberGold-50 border-2 border-dashed border-amberGold-500/80 rounded-xl space-y-2 text-xs">
             <div class="flex items-center justify-between text-deepNavy-900 font-bold text-xs">
               <span class="flex items-center gap-1.5">
@@ -374,8 +377,8 @@
               <span class="text-[10px] text-amberGold-800 bg-amberGold-200 px-1.5 py-0.5 rounded font-mono">ADMIN</span>
             </div>
 
-            <p class="text-[11px] text-slate-600">
-              Chọn video từ máy để chiếu ngay, hoặc dán link YouTube và đồng bộ lên Supabase:
+            <p class="text-[11px] text-slate-600 balance-text">
+              Bạn có thể chọn video từ máy hoặc dán link YouTube thước phim của lớp:
             </p>
 
             <div class="pt-1 flex flex-wrap items-center gap-2">
@@ -395,9 +398,9 @@
             <div id="admin-yt-box" class="hidden pt-2 border-t border-amberGold-300">
               <label class="block text-[11px] font-semibold text-slate-700 mb-1">Dán liên kết YouTube:</label>
               <div class="flex gap-1.5">
-                <input type="text" id="admin-yt-input" placeholder="https://youtu.be/..." class="flex-grow px-2 py-1 text-xs rounded border border-slate-300 focus:outline-none focus:border-amberGold-500 bg-white">
+                <input type="text" id="admin-yt-input" placeholder="https://youtu.be/..." class="flex-grow px-2.5 py-1 text-xs rounded border border-slate-300 focus:outline-none focus:border-amberGold-500 bg-white">
                 <button id="admin-yt-submit" class="px-3 py-1 text-xs bg-amberGold-600 text-white font-bold rounded hover:bg-amberGold-700 active:scale-95">
-                  Lưu & Đồng bộ Supabase
+                  Lưu & Phát
                 </button>
               </div>
             </div>
@@ -406,29 +409,29 @@
         </div>
       </section>
 
-      <!-- ================= 3. PHẦN ẢNH CỦA 11/1 (Ở DƯỚI VIDEO - LƯỚT QUA ĐỂ XEM) ================= -->
+      <!-- ================= 3. PHẦN ẢNH CỦA 11/1 (Ở DƯỚI VIDEO - KHÔNG CÓ TÊN ẢNH, CHỈ HIỂN THỊ ẢNH NGHỆ THUẬT) ================= -->
       <section class="px-4 py-8 relative">
         <div class="max-w-md mx-auto">
 
           <div class="text-center mb-5 reveal">
             <span class="inline-block text-amberGold-700 text-[11px] font-bold uppercase tracking-wider bg-amberGold-100 px-3 py-0.5 rounded-full mb-1.5">
-              Album Kỷ Niệm 11/1
+              Khoảnh Khắc Kỷ Niệm 11/1
             </span>
-            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900">
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepNavy-900 balance-text">
               Thanh Xuân Dưới Mái Trường
             </h2>
-            <p class="text-slate-600 text-xs sm:text-sm mt-1">
+            <p class="text-slate-600 text-xs sm:text-sm mt-1 max-w-xs mx-auto leading-relaxed balance-text">
               Vuốt hoặc bấm mũi tên để lướt xem các bức ảnh thanh xuân của lớp 11/1
             </p>
           </div>
 
-          <!-- SLIDER / CAROUSEL -->
+          <!-- SLIDER / CAROUSEL POLAROID (SẠCH SẼ, TINH TẾ, KHÔNG CÓ DÒNG CHỮ DƯỚI ẢNH) -->
           <div class="relative reveal" id="carousel-container">
             <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-amberGold-300/80 backdrop-blur-[1px] border-x border-amberGold-500/40 shadow-sm z-20 rotate-[-1.5deg] rounded-sm pointer-events-none"></div>
 
             <div class="overflow-hidden rounded-2xl p-1">
               <div class="slider-track" id="slider-track">
-                <!-- Đồng bộ Realtime từ bảng class_album trên Supabase -->
+                <!-- Render động 11 ảnh thật của lớp -->
               </div>
             </div>
 
@@ -445,12 +448,12 @@
             </button>
           </div>
 
-          <!-- Pagination Indicator Dots -->
-          <div class="flex items-center justify-center gap-2 mt-4" id="carousel-dots">
-            <!-- Render động theo số lượng ảnh -->
+          <!-- Pagination Indicator Dots (Gọn gàng) -->
+          <div class="flex items-center justify-center gap-1.5 mt-4 max-w-full overflow-x-auto py-1 px-2" id="carousel-dots">
+            <!-- Render động 11 chấm tròn tương ứng -->
           </div>
 
-          <!-- ADMIN ONLY: KHU VỰC QUẢN LÝ ẢNH (MẶC ĐỊNH BỊ ẨN) -->
+          <!-- ADMIN ONLY: KHU VỰC QUẢN LÝ ẢNH (CHỈ ADMIN THẤY) -->
           <div class="admin-only mt-4 p-3.5 bg-amberGold-50 border-2 border-dashed border-amberGold-500/80 rounded-xl space-y-2.5 text-xs">
             <div class="flex items-center justify-between text-deepNavy-900 font-bold">
               <span class="flex items-center gap-1.5">
@@ -463,7 +466,7 @@
             </div>
 
             <p class="text-[11px] text-slate-600">
-              Đang xem ảnh số: <strong id="admin-current-slide-badge" class="text-amberGold-800">1</strong>. Thao tác sẽ được tự động đồng bộ lên Supabase:
+              Đang xem ảnh số: <strong id="admin-current-slide-badge" class="text-amberGold-800">1</strong>
             </p>
 
             <div class="flex flex-wrap items-center gap-2 pt-1">
@@ -477,10 +480,6 @@
               </label>
               <input type="file" id="admin-add-new-photo" accept="image/*" class="hidden">
 
-              <button id="admin-btn-edit-caption" class="px-2.5 py-1.5 rounded-lg bg-white border border-amberGold-400 text-slate-800 font-semibold text-[11px] active:scale-95 transition shadow-xs">
-                ✏ Sửa chú thích ảnh
-              </button>
-
               <button id="admin-btn-delete-photo" class="px-2.5 py-1.5 rounded-lg bg-rose-600 text-white font-semibold text-[11px] active:scale-95 transition shadow-xs">
                 🗑 Xóa ảnh này
               </button>
@@ -490,7 +489,7 @@
         </div>
       </section>
 
-      <!-- ================= 4. LỜI NHẮN GỬI & QUOTE BOX ================= -->
+      <!-- ================= 4. LỜI NHẮN GỬI & QUOTE BOX (CÂN CHỈNH TỪNG DÒNG KHÔNG RỚT TỪ) ================= -->
       <section class="px-5 py-6 relative">
         <div class="max-w-md mx-auto reveal">
           <div class="relative bg-white rounded-2xl p-6 sm:p-7 border border-amberGold-600/30 shadow-xl shadow-amberGold-900/5">
@@ -501,18 +500,18 @@
 
             <div class="text-amberGold-400 font-serif text-5xl leading-none -mt-2 mb-1 select-none">“</div>
 
-            <div id="quote-content-display" class="space-y-3.5 text-slate-700 text-sm sm:text-[15px] leading-relaxed">
+            <div id="quote-content-display" class="space-y-3.5 text-slate-700 text-sm sm:text-[15px] leading-relaxed pretty-text">
               <p>
-                Kính gửi <strong class="text-deepNavy-900 font-semibold">Quý Thầy Cô kính yêu</strong>,
+                Kính gửi <strong class="text-deepNavy-900 font-semibold whitespace-nowrap">Quý Thầy Cô kính yêu</strong>,
               </p>
-              <p class="italic text-slate-600">
+              <p class="italic text-slate-600 leading-relaxed balance-text">
                 “Có một nghề bụi phấn bám đầy tay, người ta bảo là nghề trong sạch nhất.<br>
                 Có một nghề không trồng cây vào đất, lại nở cho đời muôn vạn đóa hoa thơm.”
               </p>
-              <p>
-                Nhân ngày Nhà giáo Việt Nam 20/11, tập thể <span class="font-semibold text-deepNavy-900">Lớp 11/1</span> xin kính gửi đến Thầy Cô ngàn lời tri ân sâu sắc nhất. Cảm ơn Thầy Cô đã luôn kiên nhẫn chở che, dìu dắt và truyền cho chúng em ngọn lửa đam mê tri thức.
+              <p class="leading-relaxed pretty-text">
+                Nhân ngày Nhà giáo Việt Nam 20/11, tập thể <span class="font-semibold text-deepNavy-900 whitespace-nowrap">Lớp 11/1</span> xin kính gửi đến Thầy Cô ngàn lời tri ân sâu sắc nhất. Cảm ơn Thầy Cô đã luôn kiên nhẫn chở che, dìu dắt và truyền cho chúng em ngọn lửa đam mê tri thức.
               </p>
-              <p>
+              <p class="leading-relaxed pretty-text">
                 Kính chúc Thầy Cô luôn dồi dào sức khỏe, tràn đầy niềm vui và mãi là người lái đò tận tụy đưa bao thế hệ học trò đến bến bờ ước mơ!
               </p>
             </div>
@@ -520,58 +519,34 @@
             <!-- Signature -->
             <div class="mt-6 pt-4 border-t border-amberGold-200/60 flex items-center justify-between">
               <div>
-                <span class="block text-xs uppercase tracking-wider text-amberGold-800 font-bold">Kính dâng Thầy Cô</span>
-                <span class="block text-xs text-slate-500">Tập thể học sinh Lớp 11/1</span>
+                <span class="block text-xs uppercase tracking-wider text-amberGold-800 font-bold whitespace-nowrap">Kính dâng Thầy Cô</span>
+                <span class="block text-xs text-slate-500 whitespace-nowrap">Tập thể học sinh Lớp 11/1</span>
               </div>
               <div class="text-right">
-                <span class="font-script text-2xl text-deepNavy-900 font-bold">11/1 Forever</span>
+                <span class="font-script text-2xl text-deepNavy-900 font-bold whitespace-nowrap">11/1 Forever</span>
               </div>
             </div>
           </div>
 
-          <!-- ADMIN SỬA LỜI TRI ÂN (MẶC ĐỊNH BỊ ẨN) -->
+          <!-- ADMIN SỬA LỜI TRI ÂN -->
           <div class="admin-only mt-3 text-center">
             <button id="admin-btn-edit-quote" class="px-3 py-1.5 rounded-lg bg-amberGold-100 text-amberGold-900 border border-amberGold-400 text-xs font-semibold hover:bg-amberGold-200 transition">
-              ✏ Chỉnh sửa & Lưu lên Supabase (Admin)
+              ✏ Chỉnh sửa bức thư tri ân (Admin)
             </button>
           </div>
 
-          <!-- THẢ TIM TRI ÂN (ĐỒNG BỘ REALTIME TỪ BẢNG page_likes) -->
+          <!-- THẢ TIM TRI ÂN (KHÔNG CẦN SUPABASE - LƯU CỤC BỘ TRƠN TRU) -->
           <div class="mt-6 text-center reveal">
             <button id="btn-heart-burst" class="group relative inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gradient-to-r from-rose-500 via-amberGold-500 to-rose-500 text-white font-bold text-sm shadow-lg shadow-rose-500/25 hover:shadow-xl hover:scale-105 active:scale-95 transition-all">
-              <svg class="w-5 h-5 fill-current animate-bounce text-white" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 fill-current animate-bounce text-white shrink-0" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
               </svg>
-              <span>Thả tim tri ân Thầy Cô</span>
+              <span class="whitespace-nowrap">Thả tim tri ân Thầy Cô</span>
               <span id="heart-count" class="bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs font-mono">1.101</span>
             </button>
-            <p class="text-[11px] text-slate-500 mt-2">
+            <p class="text-[11px] text-slate-500 mt-2 max-w-xs mx-auto balance-text">
               Chạm liên tục để gửi muôn đóa hoa và trái tim rực rỡ ✨
             </p>
-          </div>
-
-          <!-- SỔ LƯU BÚT MINI (ĐỒNG BỘ REALTIME TỪ BẢNG guestbook) -->
-          <div class="mt-8 bg-white/90 rounded-2xl p-5 border border-cream-300 shadow-xs reveal">
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="font-serif font-bold text-deepNavy-900 text-base flex items-center gap-1.5">
-                <span>💌</span> Sổ Lưu Bút Tri Ân 11/1
-              </h3>
-              <span id="wishes-count" class="text-[11px] text-amberGold-700 font-semibold bg-amberGold-100 px-2 py-0.5 rounded-full">Đang tải...</span>
-            </div>
-
-            <div id="wishes-container" class="space-y-2 max-h-44 overflow-y-auto pr-1 text-xs">
-              <!-- Render Realtime từ Supabase guestbook -->
-            </div>
-
-            <form id="form-wish" class="mt-3 pt-3 border-t border-slate-100 space-y-2">
-              <div class="grid grid-cols-3 gap-2">
-                <input type="text" id="input-wish-name" placeholder="Tên bạn..." required class="col-span-1 px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:border-amberGold-500">
-                <input type="text" id="input-wish-text" placeholder="Viết vài dòng gửi Thầy Cô..." required class="col-span-2 px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:border-amberGold-500">
-              </div>
-              <button type="submit" id="btn-submit-wish" class="w-full py-1.5 bg-deepNavy-900 text-amberGold-300 font-semibold text-xs rounded-lg hover:bg-slate-800 transition active:scale-95 shadow-xs">
-                Gửi Lời Chúc Vào Sổ Kỷ Niệm ✦
-              </button>
-            </form>
           </div>
 
         </div>
@@ -589,14 +564,14 @@
         </a>
       </div>
 
-      <div class="space-y-1.5">
+      <div class="space-y-1.5 balance-text">
         <p class="text-xs sm:text-sm font-medium tracking-wide">
-          Made with <span class="text-rose-500 animate-pulse">❤️</span> by <span class="font-semibold text-amberGold-400">Tập thể 11/1</span>
+          Made with <span class="text-rose-500 animate-pulse">❤️</span> by <span class="font-semibold text-amberGold-400 whitespace-nowrap">Tập thể 11/1</span>
         </p>
         <p class="text-[11px] text-slate-400">
           Trường THPT Hà Trung • B1 - Beating As One
         </p>
-        <p class="text-[10px] text-amberGold-500/80 pt-1 font-mono tracking-wider">
+        <p class="text-[10px] text-amberGold-500/80 pt-1 font-mono tracking-wider uppercase">
           TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20.11
         </p>
 
@@ -623,7 +598,7 @@
           <span class="w-3 h-3 rounded-full bg-rose-500 inline-block cursor-pointer" id="btn-close-cmd-dot"></span>
           <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
           <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-          <span class="ml-2 font-bold text-emerald-400 text-[11px]">ADMIN TERMINAL CMD - SUPABASE REALTIME</span>
+          <span class="ml-2 font-bold text-emerald-400 text-[11px]">ADMIN TERMINAL CMD - 11/1 CONSOLE</span>
         </div>
         <div class="flex items-center gap-2">
           <span class="text-[10px] text-slate-500 hidden sm:inline">Phím tắt: ESC để thoát</span>
@@ -646,10 +621,10 @@
           ✦ HỆ THỐNG DÒNG LỆNH QUẢN TRỊ 11/1 (B1 - BEATING AS ONE) ✦
         </div>
         <div class="text-slate-400 text-[11px]">
-          Chào mừng Quản trị viên! Gõ <span class="text-amber-300 font-bold">help</span> để xem các lệnh quản trị và đồng bộ Supabase.
+          Chào mừng Quản trị viên! Gõ <span class="text-amber-300 font-bold">help</span> để xem các lệnh quản trị nhanh.
         </div>
         <div class="text-slate-500 text-[10px] border-b border-slate-800 pb-2">
-          Kết nối: Supabase Realtime • Trạng thái: Đã xác thực bảo mật
+          Hệ thống: Client Standalone • Trạng thái: Đã xác thực bảo mật
         </div>
       </div>
 
@@ -670,7 +645,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: ĐĂNG NHẬP ADMIN (SHA-256 HASH VERIFICATION - BẢO MẬT TUYỆT ĐỐI) ================= -->
+  <!-- ================= MODAL: ĐĂNG NHẬP ADMIN (SHA-256 HASH VERIFICATION) ================= -->
   <div id="modal-admin-login" class="fixed inset-0 bg-deepNavy-950/85 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
     <div class="w-full max-w-xs bg-white rounded-2xl p-5 shadow-2xl border-2 border-amberGold-500 text-center space-y-3">
       <div class="w-12 h-12 mx-auto rounded-full bg-amberGold-100 text-amberGold-700 flex items-center justify-center">
@@ -680,7 +655,7 @@
       </div>
       <div>
         <h3 class="font-serif font-bold text-deepNavy-900 text-base">Xác Thực Quản Trị Viên</h3>
-        <p class="text-[11px] text-slate-500">Chỉ admin lớp 11/1 mới có quyền chỉnh sửa ảnh và video</p>
+        <p class="text-[11px] text-slate-500 balance-text">Chỉ admin lớp 11/1 mới có quyền chỉnh sửa ảnh và video</p>
       </div>
       <form id="form-admin-auth" class="space-y-2.5">
         <input type="password" id="admin-pass-input" placeholder="Nhập mật khẩu admin..." class="w-full px-3 py-2 text-center text-xs rounded-lg border border-slate-300 focus:outline-none focus:border-amberGold-500">
@@ -693,52 +668,32 @@
           </button>
         </div>
       </form>
-      <p class="text-[10px] text-slate-400">Gợi ý mật khẩu: <code class="font-bold text-amberGold-700">admin111</code> hoặc <code class="font-bold text-amberGold-700">11b1hatrung</code> hoặc <code class="font-bold text-amberGold-700">2011</code></p>
+      <p class="text-[10px] text-slate-400">Gợi ý mật khẩu: <code class="font-bold text-amberGold-700">2011</code> hoặc <code class="font-bold text-amberGold-700">admin111</code></p>
     </div>
   </div>
 
-  <!-- ================= LIGHTBOX MODAL: XEM ẢNH PHÓNG TO ================= -->
+  <!-- ================= LIGHTBOX MODAL: XEM ẢNH PHÓNG TO (KHÔNG HIỂN THỊ TÊN ẢNH) ================= -->
   <div id="photo-modal" class="fixed inset-0 bg-deepNavy-950/95 backdrop-blur-md z-50 hidden flex-col items-center justify-center p-4 transition-opacity duration-300 opacity-0">
-    <button id="btn-close-modal" aria-label="Đóng" class="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition active:scale-90">
+    <button id="btn-close-modal" aria-label="Đóng" class="absolute top-4 right-4 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition active:scale-90 z-20">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <div class="max-w-3xl w-full max-h-[85vh] flex flex-col items-center">
-      <img id="modal-img" src="" alt="Ảnh phóng to" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl border-2 border-amberGold-500/50">
-      <p id="modal-caption" class="text-cream-100 font-script text-2xl sm:text-3xl mt-4 text-center">
-        Thanh xuân của 11/1 dưới mái trường thân yêu
-      </p>
+    <div class="max-w-3xl w-full max-h-[88vh] flex flex-col items-center justify-center">
+      <img id="modal-img" src="" alt="Ảnh phóng to" class="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl border-2 border-amberGold-500/50">
     </div>
   </div>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     /* =========================================================
-       1. CẤU HÌNH SUPABASE CLIENT (REALTIME & ĐỒNG BỘ DỮ LIỆU)
-       ========================================================= */
-    const SUPABASE_URL = "https://ijvkkpinvjbfgdhswyju.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_wPt2eayjC5TSp-1INWKhAw_S_mVfU-U";
-
-    let supabaseClient = null;
-    try {
-      if (window.supabase && typeof window.supabase.createClient === 'function') {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log("Supabase Client initialized successfully!");
-      }
-    } catch (err) {
-      console.warn("Supabase initialization fallback:", err);
-    }
-
-    /* =========================================================
-       2. BẢO MẬT ADMIN BẰNG SHA-256 HASH (ẨN PASS KHỎI FRONTEND)
-       - Mật khẩu hợp lệ: admin111, 11b1hatrung, 2011, 1101
-       - Tuyệt đối không lưu plain-text mật khẩu trong code!
+       1. BẢO MẬT ADMIN BẰNG SHA-256 HASH (ẨN PASS KHỎI FRONTEND)
+       - Mật khẩu: 2011, admin111, 11b1hatrung, 1101
        ========================================================= */
     const VALID_PASSWORD_HASHES = [
+      '72d1b5da6eeaf1789df86487da50ad5e9dadb5ffaecb56b6de592aa286c9c1b8', // 2011
       'ffd33f577660793809c7070ed3509cdcaf1db683996f19fb10b96ca33268a5cb', // admin111
       '23a6c57d33480fb55f76c032fd68e2cce54be1b10668332855d0d39cd3dfdddc', // 11b1hatrung
-      '72d1b5da6eeaf1789df86487da50ad5e9dadb5ffaecb56b6de592aa286c9c1b8', // 2011
       '36ab771eba23f49d7ae43af88c601f3de8fccb201250906a4085444ae765f2db'  // 1101
     ];
 
@@ -762,7 +717,6 @@
         closeCmd();
       }
       renderCarousel();
-      renderWishes();
     }
 
     const modalAdminLogin = document.getElementById('modal-admin-login');
@@ -825,7 +779,7 @@
     logoTrigger.addEventListener('touchend', () => clearTimeout(logoTimer));
 
     /* =========================================================
-       3. QUẢN LÝ ÂM THANH NHẠC NỀN (AUDIO CONTROLLER)
+       2. QUẢN LÝ ÂM THANH NHẠC NỀN (AUDIO CONTROLLER)
        - Âm lượng nhỏ nhẹ vừa đủ nghe (25%)
        - Khi người dùng bấm xem video: TỰ ĐỘNG TẮT NHẠC NỀN
        - Khi chuyển tab hoặc ẩn trình duyệt (visibilitychange): TỰ ĐỘNG TẮT NHẠC
@@ -889,14 +843,12 @@
     // SỰ KIỆN: visibilitychange (DỪNG NHẠC KHI CHUYỂN TAB HOẶC ẨN ỨNG DỤNG)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        // Tab bị ẩn hoặc người dùng chuyển ứng dụng khác
         if (!bgMusic.paused) {
           wasMusicPlayingBeforeTabHidden = true;
           bgMusic.pause();
           updateMusicUI(false);
         }
       } else {
-        // Người dùng quay lại tab trang web
         if (wasMusicPlayingBeforeTabHidden && !userPausedMusicManually && tributeVideo.paused) {
           bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
           wasMusicPlayingBeforeTabHidden = false;
@@ -905,7 +857,7 @@
     });
 
     /* =========================================================
-       4. TƯƠNG TÁC GIỮA VIDEO VÀ NHẠC NỀN
+       3. TƯƠNG TÁC GIỮA VIDEO VÀ NHẠC NỀN
        ========================================================= */
     const tributeVideo = document.getElementById('tribute-video');
     const videoOverlay = document.getElementById('video-overlay');
@@ -983,14 +935,14 @@
       }
     });
 
-    // Admin nhúng video YouTube & Đồng bộ Supabase (bảng trian_2011)
+    // Admin nhúng video YouTube
     const adminYtBox = document.getElementById('admin-yt-box');
     document.getElementById('admin-btn-toggle-yt').addEventListener('click', () => {
       if (!isAdmin) return;
       adminYtBox.classList.toggle('hidden');
     });
 
-    document.getElementById('admin-yt-submit').addEventListener('click', async () => {
+    document.getElementById('admin-yt-submit').addEventListener('click', () => {
       if (!isAdmin) return;
       const val = document.getElementById('admin-yt-input').value.trim();
       if (!val) return;
@@ -1004,22 +956,8 @@
       }
 
       applyYoutubeVideo(vid);
-
-      // Lưu lên Supabase nếu có client
-      if (supabaseClient) {
-        try {
-          await supabaseClient.from('trian_2011').upsert({
-            id: 'config_11_1',
-            video_url: vid,
-            video_type: 'youtube',
-            updated_at: new Date().toISOString()
-          });
-        } catch (e) {
-          console.warn('Lỗi lưu video lên Supabase:', e);
-        }
-      }
       adminYtBox.classList.add('hidden');
-      alert('Đã cập nhật và đồng bộ video YouTube thành công!');
+      alert('Đã cập nhật video YouTube thành công!');
     });
 
     function applyYoutubeVideo(vid) {
@@ -1036,13 +974,20 @@
     }
 
     /* =========================================================
-       5. ĐỒNG BỘ REALTIME ALBUM ẢNH (BẢNG class_album)
+       4. ALBUM ẢNH KỶ NIỆM (11 ẢNH THẬT - BỎ PHẦN TÊN ẢNH RƯỜM RÀ)
        ========================================================= */
     const defaultPhotos = [
-      { id: 1, src: 'anh-lop-11-1.jpg', title: 'Thanh xuân của 11/1 dưới mái trường thân yêu', subtitle: 'Ảnh tập thể Lớp 11/1 • THPT Hà Trung' },
-      { id: 2, src: 'anh-lop-2.jpg', title: 'Những tiết học say mê & Nụ cười bảng đen', subtitle: 'Bụi phấn nghiêng nghiêng theo từng bài giảng' },
-      { id: 3, src: 'anh-lop-3.jpg', title: 'Hội thi Tri Ân 20/11 - Tự hào 11B1', subtitle: 'B1 - Beating As One • Nhiệt huyết tuổi trẻ' },
-      { id: 4, src: 'anh-lop-4.jpg', title: 'Khoảnh khắc ấm áp bên Thầy Cô kính yêu', subtitle: 'Tình nghĩa thầy trò son sắt không phai' }
+      { id: 1, src: 'album/anh-1.jpg' },
+      { id: 2, src: 'album/anh-2.jpg' },
+      { id: 3, src: 'album/anh-3.jpg' },
+      { id: 4, src: 'album/anh-4.jpg' },
+      { id: 5, src: 'album/anh-5.jpg' },
+      { id: 6, src: 'album/anh-6.jpg' },
+      { id: 7, src: 'album/anh-7.jpg' },
+      { id: 8, src: 'album/anh-8.jpg' },
+      { id: 9, src: 'album/anh-9.jpg' },
+      { id: 10, src: 'album/anh-10.jpg' },
+      { id: 11, src: 'album/anh-11.jpg' }
     ];
 
     let photosData = defaultPhotos;
@@ -1061,32 +1006,29 @@
         const slide = document.createElement('div');
         slide.className = 'slider-item px-1';
         slide.innerHTML = `
-          <div class="polaroid-frame bg-white p-3.5 sm:p-4 rounded-xl border border-cream-200 cursor-pointer group" onclick="openLightbox(${idx})">
-            <div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-900 border border-slate-100">
+          <div class="polaroid-frame bg-white p-3 sm:p-4 rounded-xl border border-cream-200 cursor-pointer group" onclick="openLightbox(${idx})">
+            <div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-950 border border-slate-100 flex items-center justify-center">
+              <!-- Nền mờ nghệ thuật cho cả ảnh dọc và ngang -->
+              <img src="${item.src}" class="absolute inset-0 w-full h-full object-cover blur-md opacity-35 scale-110 pointer-events-none">
+              <!-- Ảnh chính hiển thị trọn vẹn không bị cắt đầu/chân -->
               <img 
                 id="photo-slot-${idx}"
                 src="${item.src}" 
-                alt="${escapeHTML(item.title)}" 
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80';"
+                alt="Ảnh kỷ niệm 11/1" 
+                class="relative z-10 max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                onerror="this.src='anh-lop-11-1.jpg';"
               >
-              <span class="absolute top-2 left-2 bg-deepNavy-900/80 text-amberGold-300 text-[10px] px-2 py-0.5 rounded-full font-mono">${idx + 1}/${photosData.length}</span>
-              <span class="absolute bottom-2 right-2 bg-deepNavy-900/80 text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 opacity-90">
+              <span class="absolute top-2 left-2 z-20 bg-deepNavy-900/85 text-amberGold-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono shadow-sm">${idx + 1}/${photosData.length}</span>
+              <span class="absolute bottom-2 right-2 z-20 bg-deepNavy-900/85 text-white text-[10px] px-2.5 py-0.5 rounded-full flex items-center gap-1 opacity-90 shadow-sm">
                 🔍 Phóng to
               </span>
-            </div>
-            <div class="pt-3 pb-1 text-center">
-              <p class="font-script text-2xl sm:text-3xl text-deepNavy-900 font-bold leading-tight">
-                ${escapeHTML(item.title)}
-              </p>
-              <p class="text-[11px] text-slate-500 mt-0.5 font-medium">${escapeHTML(item.subtitle)}</p>
             </div>
           </div>
         `;
         sliderTrack.appendChild(slide);
 
         const dot = document.createElement('button');
-        dot.className = idx === currentSlide ? 'w-6 h-2 rounded-full bg-amberGold-600 transition-all' : 'w-2 h-2 rounded-full bg-slate-300 transition-all';
+        dot.className = idx === currentSlide ? 'w-5 h-2 rounded-full bg-amberGold-600 transition-all shrink-0' : 'w-2 h-2 rounded-full bg-slate-300 transition-all shrink-0';
         dot.onclick = () => goToSlide(idx);
         dotsContainer.appendChild(dot);
       });
@@ -1098,7 +1040,7 @@
       sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
       const dots = dotsContainer.children;
       for (let i = 0; i < dots.length; i++) {
-        dots[i].className = i === currentSlide ? 'w-6 h-2 rounded-full bg-amberGold-600 transition-all' : 'w-2 h-2 rounded-full bg-slate-300 transition-all';
+        dots[i].className = i === currentSlide ? 'w-5 h-2 rounded-full bg-amberGold-600 transition-all shrink-0' : 'w-2 h-2 rounded-full bg-slate-300 transition-all shrink-0';
       }
       if (adminCurrentSlideBadge) {
         adminCurrentSlideBadge.textContent = `${currentSlide + 1} / ${photosData.length}`;
@@ -1139,15 +1081,13 @@
       }
     }, { passive: true });
 
-    // Lightbox modal
+    // Lightbox modal (chỉ xem ảnh, không hiển thị caption thừa)
     const photoModal = document.getElementById('photo-modal');
     const modalImg = document.getElementById('modal-img');
-    const modalCaption = document.getElementById('modal-caption');
 
     function openLightbox(idx) {
       if (photosData[idx]) {
         modalImg.src = photosData[idx].src;
-        modalCaption.textContent = photosData[idx].title || "Kỷ niệm lớp 11/1";
         photoModal.classList.remove('hidden');
         setTimeout(() => photoModal.classList.remove('opacity-0'), 10);
       }
@@ -1162,32 +1102,15 @@
       if (e.target === photoModal || e.target === modalImg) closeModal();
     });
 
-    // Fetch Album từ Supabase
-    async function fetchAlbumSupabase() {
-      if (!supabaseClient) return;
-      try {
-        const { data, error } = await supabaseClient.from('class_album').select('*').order('id', { ascending: true });
-        if (!error && data && data.length > 0) {
-          photosData = data;
-          renderCarousel();
-        }
-      } catch (e) {
-        console.warn('Fallback local album:', e);
-      }
-    }
-
-    // ADMIN QUẢN TRỊ ẢNH
+    // Admin quản trị ảnh
     document.getElementById('admin-replace-current-photo').addEventListener('change', (e) => {
       if (!isAdmin) return;
       const file = e.target.files[0];
       if (file && photosData[currentSlide]) {
         const reader = new FileReader();
-        reader.onload = async (event) => {
+        reader.onload = (event) => {
           photosData[currentSlide].src = event.target.result;
           renderCarousel();
-          if (supabaseClient && photosData[currentSlide].id) {
-            await supabaseClient.from('class_album').update({ src: event.target.result }).eq('id', photosData[currentSlide].id);
-          }
           alert('Đã cập nhật ảnh thành công!');
         };
         reader.readAsDataURL(file);
@@ -1198,19 +1121,12 @@
       if (!isAdmin) return;
       const file = e.target.files[0];
       if (file) {
-        const title = prompt('Nhập tiêu đề cho bức ảnh mới:', 'Kỷ niệm thanh xuân 11/1') || 'Kỷ niệm thanh xuân 11/1';
         const reader = new FileReader();
-        reader.onload = async (event) => {
-          const newPhoto = {
-            src: event.target.result,
-            title: title,
-            subtitle: 'Khoảnh khắc lớp 11/1'
-          };
-          if (supabaseClient) {
-            const { data } = await supabaseClient.from('class_album').insert([newPhoto]).select();
-            if (data && data[0]) newPhoto.id = data[0].id;
-          }
-          photosData.push(newPhoto);
+        reader.onload = (event) => {
+          photosData.push({
+            id: photosData.length + 1,
+            src: event.target.result
+          });
           currentSlide = photosData.length - 1;
           renderCarousel();
           alert('Đã thêm ảnh mới vào Album!');
@@ -1219,121 +1135,50 @@
       }
     });
 
-    document.getElementById('admin-btn-edit-caption').addEventListener('click', async () => {
-      if (!isAdmin || !photosData[currentSlide]) return;
-      const newTitle = prompt('Nhập tiêu đề mới cho bức ảnh:', photosData[currentSlide].title);
-      if (newTitle !== null && newTitle.trim() !== '') {
-        photosData[currentSlide].title = newTitle.trim();
-        const newSub = prompt('Nhập chú thích phụ:', photosData[currentSlide].subtitle) || '';
-        photosData[currentSlide].subtitle = newSub.trim();
-        renderCarousel();
-        if (supabaseClient && photosData[currentSlide].id) {
-          await supabaseClient.from('class_album').update({
-            title: photosData[currentSlide].title,
-            subtitle: photosData[currentSlide].subtitle
-          }).eq('id', photosData[currentSlide].id);
-        }
-      }
-    });
-
-    document.getElementById('admin-btn-delete-photo').addEventListener('click', async () => {
+    document.getElementById('admin-btn-delete-photo').addEventListener('click', () => {
       if (!isAdmin) return;
       if (photosData.length <= 1) {
         alert('Cần giữ lại ít nhất 1 bức ảnh trong Album!');
         return;
       }
       if (confirm(`Bạn có chắc chắn muốn xóa ảnh số ${currentSlide + 1} khỏi Album không?`)) {
-        const targetId = photosData[currentSlide].id;
         photosData.splice(currentSlide, 1);
         if (currentSlide >= photosData.length) currentSlide = photosData.length - 1;
         renderCarousel();
-        if (supabaseClient && targetId) {
-          await supabaseClient.from('class_album').delete().eq('id', targetId);
-        }
         alert('Đã xóa ảnh thành công!');
       }
     });
 
-    /* =========================================================
-       6. ĐỒNG BỘ REALTIME LỜI TRI ÂN (BẢNG trian_2011)
-       ========================================================= */
-    async function fetchConfigSupabase() {
-      if (!supabaseClient) return;
-      try {
-        const { data, error } = await supabaseClient.from('trian_2011').select('*').eq('id', 'config_11_1').single();
-        if (!error && data) {
-          if (data.hero_title) document.getElementById('hero-title-text').textContent = data.hero_title;
-          if (data.hero_subtitle) document.getElementById('hero-subtitle-text').textContent = data.hero_subtitle;
-          if (data.quote_content) document.getElementById('quote-content-display').innerHTML = data.quote_content;
-          if (data.video_type === 'youtube' && data.video_url) {
-            applyYoutubeVideo(data.video_url);
-          }
-        }
-      } catch (e) {
-        console.warn('Fallback local config:', e);
-      }
-    }
-
-    document.getElementById('admin-btn-edit-quote').addEventListener('click', async () => {
+    // Admin sửa lời tri ân
+    document.getElementById('admin-btn-edit-quote').addEventListener('click', () => {
       if (!isAdmin) return;
       const quoteBox = document.getElementById('quote-content-display');
       const newContent = prompt('Nhập nội dung lời tri ân mới:', quoteBox.innerText);
       if (newContent !== null && newContent.trim() !== '') {
-        quoteBox.innerHTML = `<p>${escapeHTML(newContent).replace(/\n/g, '<br>')}</p>`;
-        if (supabaseClient) {
-          await supabaseClient.from('trian_2011').upsert({
-            id: 'config_11_1',
-            quote_content: quoteBox.innerHTML,
-            updated_at: new Date().toISOString()
-          });
-        }
-        alert('Đã cập nhật lời tri ân lên Supabase!');
+        quoteBox.innerHTML = `<p class="leading-relaxed pretty-text">${escapeHTML(newContent).replace(/\n/g, '<br>')}</p>`;
+        alert('Đã cập nhật lời tri ân!');
       }
     });
 
     /* =========================================================
-       7. ĐỒNG BỘ REALTIME THẢ TIM (BẢNG page_likes)
+       5. THẢ TIM TRI ÂN
        ========================================================= */
-    let heartCount = 1101;
+    let heartCount = parseInt(localStorage.getItem('hearts_11_1') || '1101');
     const btnHeart = document.getElementById('btn-heart-burst');
     const heartDisplay = document.getElementById('heart-count');
     const burstContainer = document.getElementById('heart-burst-container');
     const emojis = ['❤️', '💖', '💐', '✨', '🌹', '🥰', '🎓', '💛'];
+    heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
 
-    async function fetchLikesSupabase() {
-      if (!supabaseClient) return;
-      try {
-        const { data, error } = await supabaseClient.from('page_likes').select('count').eq('id', 'likes_11_1').single();
-        if (!error && data && data.count) {
-          heartCount = data.count;
-          heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
-        }
-      } catch (e) {
-        console.warn('Fallback local likes:', e);
-      }
-    }
-
-    let likesUpdateTimeout = null;
     btnHeart.addEventListener('click', (e) => {
       heartCount++;
       heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
+      localStorage.setItem('hearts_11_1', heartCount.toString());
 
       const rect = btnHeart.getBoundingClientRect();
       const ox = rect.left + rect.width / 2;
       const oy = rect.top + rect.height / 2;
       for (let i = 0; i < 8; i++) spawnParticle(ox, oy);
-
-      // Debounce cập nhật lên Supabase
-      clearTimeout(likesUpdateTimeout);
-      likesUpdateTimeout = setTimeout(async () => {
-        if (supabaseClient) {
-          await supabaseClient.from('page_likes').upsert({
-            id: 'likes_11_1',
-            count: heartCount,
-            updated_at: new Date().toISOString()
-          });
-        }
-      }, 600);
     });
 
     function spawnParticle(x, y) {
@@ -1360,149 +1205,7 @@
     }
 
     /* =========================================================
-       8. ĐỒNG BỘ REALTIME SỔ LƯU BÚT (BẢNG guestbook)
-       ========================================================= */
-    const defaultWishes = [
-      { id: 1, name: 'Bạn Minh Quân (Lớp trưởng)', text: 'Chúc cô chủ nhiệm luôn tươi trẻ, nhiều niềm vui và mãi yêu thương đàn con 11/1 này ạ! ❤️' },
-      { id: 2, name: 'Bạn Thu Hà', text: 'Cảm ơn thầy cô đã luôn bao dung và ân cần. Chúc thầy cô 20/11 ngập tràn hoa tươi và nụ cười! 💐' },
-      { id: 3, name: 'Học sinh 11/1', text: 'Mãi khắc ghi công ơn người thầy, người cô đã trao cho chúng em đôi cánh ước mơ!' }
-    ];
-
-    let wishesData = defaultWishes;
-    const formWish = document.getElementById('form-wish');
-    const inputName = document.getElementById('input-wish-name');
-    const inputText = document.getElementById('input-wish-text');
-    const wishesContainer = document.getElementById('wishes-container');
-    const wishesCount = document.getElementById('wishes-count');
-
-    function renderWishes() {
-      wishesContainer.innerHTML = '';
-      wishesCount.textContent = `${wishesData.length} lời chúc`;
-
-      wishesData.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'p-2.5 rounded-lg bg-amberGold-50/70 border border-amberGold-200/80 relative group';
-        card.innerHTML = `
-          <div class="flex justify-between items-center font-semibold text-deepNavy-900 mb-0.5">
-            <span>${escapeHTML(item.name)}</span>
-            <div class="flex items-center gap-1.5">
-              <span class="text-[10px] text-amberGold-700 font-normal">Tri ân</span>
-              ${isAdmin ? `<button onclick="deleteWish(${index}, ${item.id || 0})" class="text-rose-500 hover:text-rose-700 text-[10px] font-bold px-1 bg-white rounded border border-rose-200 ml-1">Xóa</button>` : ''}
-            </div>
-          </div>
-          <p class="text-slate-700">${escapeHTML(item.text)}</p>
-        `;
-        wishesContainer.appendChild(card);
-      });
-    }
-
-    window.deleteWish = async function(index, id) {
-      if (!isAdmin) return;
-      if (confirm('Xóa lời chúc này khỏi sổ lưu bút?')) {
-        wishesData.splice(index, 1);
-        renderWishes();
-        if (supabaseClient && id) {
-          await supabaseClient.from('guestbook').delete().eq('id', id);
-        }
-      }
-    };
-
-    async function fetchGuestbookSupabase() {
-      if (!supabaseClient) {
-        renderWishes();
-        return;
-      }
-      try {
-        const { data, error } = await supabaseClient.from('guestbook').select('*').order('id', { ascending: false });
-        if (!error && data && data.length > 0) {
-          wishesData = data;
-        }
-      } catch (e) {
-        console.warn('Fallback local wishes:', e);
-      }
-      renderWishes();
-    }
-
-    formWish.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = inputName.value.trim();
-      const text = inputText.value.trim();
-      if (!name || !text) return;
-
-      const newWish = { name, text };
-      if (supabaseClient) {
-        try {
-          const { data } = await supabaseClient.from('guestbook').insert([newWish]).select();
-          if (data && data[0]) newWish.id = data[0].id;
-        } catch (err) {
-          console.warn('Lỗi ghi guestbook Supabase:', err);
-        }
-      }
-
-      wishesData.unshift(newWish);
-      renderWishes();
-
-      const r = formWish.getBoundingClientRect();
-      spawnParticle(r.left + r.width / 2, r.top);
-      inputName.value = '';
-      inputText.value = '';
-    });
-
-    /* =========================================================
-       9. LẮNG NGHE SUPABASE REALTIME (POSTGRES CHANGES)
-       ========================================================= */
-    function setupRealtimeListeners() {
-      if (!supabaseClient) return;
-
-      const channel = supabaseClient.channel('realtime_tri_an_11_1');
-
-      // Lắng nghe lời chúc mới hoặc xóa lời chúc
-      channel.on('postgres_changes', { event: '*', schema: 'public', table: 'guestbook' }, (payload) => {
-        if (payload.eventType === 'INSERT') {
-          if (!wishesData.some(w => w.id === payload.new.id)) {
-            wishesData.unshift(payload.new);
-            renderWishes();
-          }
-        } else if (payload.eventType === 'DELETE') {
-          wishesData = wishesData.filter(w => w.id !== payload.old.id);
-          renderWishes();
-        }
-      });
-
-      // Lắng nghe cập nhật số tim Realtime
-      channel.on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'page_likes' }, (payload) => {
-        if (payload.new && payload.new.count) {
-          heartCount = payload.new.count;
-          heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
-        }
-      });
-
-      // Lắng nghe cập nhật bài tri ân hoặc video
-      channel.on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'trian_2011' }, (payload) => {
-        if (payload.new) {
-          if (payload.new.hero_title) document.getElementById('hero-title-text').textContent = payload.new.hero_title;
-          if (payload.new.quote_content) document.getElementById('quote-content-display').innerHTML = payload.new.quote_content;
-          if (payload.new.video_type === 'youtube' && payload.new.video_url) {
-            applyYoutubeVideo(payload.new.video_url);
-          }
-        }
-      });
-
-      // Lắng nghe album ảnh
-      channel.on('postgres_changes', { event: '*', schema: 'public', table: 'class_album' }, () => {
-        fetchAlbumSupabase();
-      });
-
-      channel.subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          const badge = document.getElementById('supabase-status-badge');
-          if (badge) badge.classList.remove('hidden');
-        }
-      });
-    }
-
-    /* =========================================================
-       10. TERMINAL CMD ADMIN CONSOLE
+       6. TERMINAL CMD ADMIN CONSOLE
        ========================================================= */
     const modalCmd = document.getElementById('modal-cmd');
     const btnOpenCmd = document.getElementById('btn-open-cmd');
@@ -1574,7 +1277,7 @@
       executeCommand(raw);
     });
 
-    async function executeCommand(input) {
+    function executeCommand(input) {
       const parts = input.trim().split(' ');
       const cmd = parts[0].toLowerCase();
       const args = parts.slice(1);
@@ -1588,13 +1291,11 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-slate-300">
   <div>• <span class="text-emerald-400 font-semibold">video [link/file]</span>: Đổi video (YouTube/MP4)</div>
   <div>• <span class="text-emerald-400 font-semibold">photo list</span>: Xem danh sách album ảnh</div>
-  <div>• <span class="text-emerald-400 font-semibold">photo add [url]</span>: Thêm ảnh mới</div>
   <div>• <span class="text-emerald-400 font-semibold">photo del [số]</span>: Xóa ảnh theo số thứ tự</div>
   <div>• <span class="text-emerald-400 font-semibold">music on / off</span>: Bật hoặc tắt nhạc nền</div>
   <div>• <span class="text-emerald-400 font-semibold">music vol [0-100]</span>: Chỉnh âm lượng (vd: music vol 25)</div>
-  <div>• <span class="text-emerald-400 font-semibold">hearts [số]</span>: Cập nhật số tim (đồng bộ Supabase)</div>
+  <div>• <span class="text-emerald-400 font-semibold">hearts [số]</span>: Cập nhật số tim (vd: hearts 2011)</div>
   <div>• <span class="text-emerald-400 font-semibold">quote [lời chúc]</span>: Sửa lời tri ân</div>
-  <div>• <span class="text-emerald-400 font-semibold">stats</span>: Thống kê Supabase & website</div>
   <div>• <span class="text-emerald-400 font-semibold">cls</span>: Xóa màn hình CMD</div>
   <div>• <span class="text-emerald-400 font-semibold">exit</span>: Đóng CMD</div>
   <div>• <span class="text-emerald-400 font-semibold">logout</span>: Đăng xuất Admin</div>
@@ -1613,10 +1314,7 @@
             if (m) vid = m[1];
             if (!bgMusic.paused) { bgMusic.pause(); updateMusicUI(false); }
             applyYoutubeVideo(vid);
-            if (supabaseClient) {
-              await supabaseClient.from('trian_2011').upsert({ id: 'config_11_1', video_url: vid, video_type: 'youtube', updated_at: new Date().toISOString() });
-            }
-            printCmd(`Đã cập nhật video YouTube (ID: ${vid}) và đồng bộ Supabase!`, 'success');
+            printCmd(`Đã cập nhật video YouTube (ID: ${vid})!`, 'success');
           } else {
             tributeVideo.src = fullArg;
             videoOverlay.style.display = 'none';
@@ -1630,7 +1328,7 @@
           if (sub === 'list') {
             let out = '<div class="text-amber-300 font-bold">ALBUM ẢNH KỶ NIỆM:</div>';
             photosData.forEach((p, i) => {
-              out += `<div>[${i + 1}] <span class="text-white font-semibold">${escapeHTML(p.title)}</span></div>`;
+              out += `<div>[Ảnh ${i + 1}] <span class="text-white">${escapeHTML(p.src)}</span></div>`;
             });
             printCmd(out);
           } else if (sub === 'del') {
@@ -1639,14 +1337,12 @@
               printCmd(`Số thứ tự không hợp lệ (1 - ${photosData.length})`, 'error');
               return;
             }
-            const targetId = photosData[idx].id;
             photosData.splice(idx, 1);
             if (currentSlide >= photosData.length) currentSlide = photosData.length - 1;
             renderCarousel();
-            if (supabaseClient && targetId) await supabaseClient.from('class_album').delete().eq('id', targetId);
             printCmd(`Đã xóa ảnh #${idx + 1}!`, 'success');
           } else {
-            printCmd('Lệnh photo: list | del [số] | add [url]', 'warning');
+            printCmd('Lệnh photo: list | del [số]', 'warning');
           }
           break;
 
@@ -1675,31 +1371,16 @@
           if (!isNaN(h)) {
             heartCount = h;
             heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
-            if (supabaseClient) {
-              await supabaseClient.from('page_likes').upsert({ id: 'likes_11_1', count: heartCount, updated_at: new Date().toISOString() });
-            }
-            printCmd(`Đã cập nhật số tim thành ${heartCount.toLocaleString('vi-VN')} trên Supabase!`, 'success');
+            localStorage.setItem('hearts_11_1', heartCount.toString());
+            printCmd(`Đã cập nhật số tim thành: ${heartCount.toLocaleString('vi-VN')}`, 'success');
           }
           break;
 
         case 'quote':
           if (fullArg) {
-            document.getElementById('quote-content-display').innerHTML = `<p>${escapeHTML(fullArg).replace(/\n/g, '<br>')}</p>`;
-            if (supabaseClient) {
-              await supabaseClient.from('trian_2011').upsert({ id: 'config_11_1', quote_content: document.getElementById('quote-content-display').innerHTML, updated_at: new Date().toISOString() });
-            }
-            printCmd('Đã cập nhật lời tri ân lên Supabase!', 'success');
+            document.getElementById('quote-content-display').innerHTML = `<p class="leading-relaxed pretty-text">${escapeHTML(fullArg).replace(/\n/g, '<br>')}</p>`;
+            printCmd('Đã cập nhật lời tri ân!', 'success');
           }
-          break;
-
-        case 'stats':
-          printCmd(`
-<div class="text-emerald-300 font-bold">THỐNG KÊ SUPABASE REALTIME:</div>
-<div>• Số lượng ảnh album: <span class="text-amber-300 font-bold">${photosData.length} ảnh</span></div>
-<div>• Lượt thả tim: <span class="text-rose-400 font-bold">${heartCount.toLocaleString('vi-VN')}</span></div>
-<div>• Lưu bút: <span class="text-blue-300 font-bold">${wishesData.length} lời chúc</span></div>
-<div>• Trạng thái kết nối: <span class="text-emerald-400 font-bold">Đã đồng bộ Realtime</span></div>
-          `);
           break;
 
         case 'cls':
@@ -1725,7 +1406,7 @@
     }
 
     /* =========================================================
-       11. CANVAS HIỆU ỨNG CÁNH HOA VÀNG BAY
+       7. CANVAS HIỆU ỨNG CÁNH HOA VÀNG BAY
        ========================================================= */
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
@@ -1804,7 +1485,7 @@
     });
 
     /* =========================================================
-       12. CHIA SẺ & CUỘN MƯỢT FADE-IN
+       8. CHIA SẺ & CUỘN MƯỢT FADE-IN
        ========================================================= */
     document.getElementById('btn-share').addEventListener('click', async () => {
       if (navigator.share) {
@@ -1834,17 +1515,10 @@
     revealElements.forEach(el => observer.observe(el));
 
     /* =========================================================
-       13. KHỞI TẠO DỮ LIỆU BAN ĐẦU
+       9. KHỞI TẠO TRANG
        ========================================================= */
     setAdminState(isAdmin);
     renderCarousel();
-
-    // Fetch dữ liệu từ Supabase & Kích hoạt Realtime Listener
-    fetchConfigSupabase();
-    fetchAlbumSupabase();
-    fetchLikesSupabase();
-    fetchGuestbookSupabase();
-    setupRealtimeListeners();
   </script>
 </body>
 </html>

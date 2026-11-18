@@ -15,10 +15,9 @@ tri-an-20-11/
 ├── logo-lop.png          <- Logo lớp 11/1 (THPT Hà Trung - B1)
 ├── nhac-nen-20-11.mp3    <- Nhạc nền tri ân "Người Gieo Mầm Xanh"
 ├── video-20-11.mp4       <- Video tri ân phát trực tiếp trên web
-├── anh-lop-11-1.jpg      <- Ảnh tập thể chính (Polaroid slide 1)
-├── anh-lop-2.jpg         <- Ảnh kỷ niệm giờ học (Polaroid slide 2)
-├── anh-lop-3.jpg         <- Ảnh kỷ niệm phong trào / văn nghệ (Polaroid slide 3)
-├── anh-lop-4.jpg         <- Ảnh khoảnh khắc bên Thầy Cô (Polaroid slide 4)
+├── anh-lop-11-1.jpg      <- Ảnh tập thể chính độ nét cao (2048x1536)
+├── album/                <- Thư mục chứa 11 ảnh thật của lớp 11/1 (anh-1.jpg -> anh-11.jpg)
+│   ├── anh-1.jpg ... anh-11.jpg
 └── README.md             <- Tài liệu hướng dẫn này
 ```
 

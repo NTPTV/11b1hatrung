@@ -35,13 +35,20 @@ CREATE TABLE IF NOT EXISTS public.class_album (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
--- Dữ liệu mẫu khởi tạo cho album
+-- Dữ liệu mẫu khởi tạo cho album (11 ảnh thật của tập thể lớp 11/1)
 INSERT INTO public.class_album (src, title, subtitle, sort_order)
 VALUES 
-('anh-lop-11-1.jpg', 'Thanh xuân của 11/1 dưới mái trường thân yêu', 'Ảnh tập thể Lớp 11/1 • THPT Hà Trung', 1),
-('anh-lop-2.jpg', 'Những tiết học say mê & Nụ cười bảng đen', 'Bụi phấn nghiêng nghiêng theo từng bài giảng', 2),
-('anh-lop-3.jpg', 'Hội thi Tri Ân 20/11 - Tự hào 11B1', 'B1 - Beating As One • Nhiệt huyết tuổi trẻ', 3),
-('anh-lop-4.jpg', 'Khoảnh khắc ấm áp bên Thầy Cô kính yêu', 'Tình nghĩa thầy trò son sắt không phai', 4)
+('album/anh-1.jpg', 'Tập thể 11/1 dưới mái trường thân yêu', 'Thanh xuân rực rỡ • THPT Hà Trung - B1 Beating As One', 1),
+('album/anh-2.jpg', 'Khoảnh khắc thanh xuân bên thầy cô kính yêu', 'Người trao tri thức, gieo mầm ước mơ tương lai', 2),
+('album/anh-3.jpg', 'Những tiết học say mê & Nụ cười bảng đen', 'Bụi phấn nghiêng nghiêng theo từng bài giảng', 3),
+('album/anh-4.jpg', 'Nụ cười hồn nhiên của tuổi học trò', 'Lưu giữ những tháng ngày vô tư dưới mái trường', 4),
+('album/anh-5.jpg', 'Nhiệt huyết tuổi trẻ - Tự hào 11/1', 'B1 - Beating As One • Cùng chung một nhịp đập', 5),
+('album/anh-6.jpg', 'Những kỷ niệm gắn bó của đại gia đình 11/1', 'Mỗi khoảnh khắc là một trang lưu bút đẹp', 6),
+('album/anh-7.jpg', 'Hội thi Tri Ân 20/11 - Năng động & Sáng tạo', 'Kính dâng thầy cô những đóa hoa tươi thắm nhất', 7),
+('album/anh-8.jpg', 'Gắn kết yêu thương - Vững bước tương lai', 'Cùng nhau vượt qua mọi thử thách trên con đường học tập', 8),
+('album/anh-9.jpg', 'Tà áo trắng tinh khôi và nụ cười rạng rỡ', 'Tuổi thanh xuân đẹp nhất là khi có các bạn bên cạnh', 9),
+('album/anh-10.jpg', 'Thước phim kỷ niệm không thể nào phai', 'Cảm ơn thầy cô đã chở che và nâng cánh ước mơ', 10),
+('album/anh-11.jpg', 'Mãi mãi là một gia đình - 11/1 Forever', 'Tri ân Ngày Nhà giáo Việt Nam 20/11', 11)
 ON CONFLICT DO NOTHING;
 
 -- 3. BẢNG SỔ LƯU BÚT TRI ÂN (guestbook)
