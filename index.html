@@ -133,6 +133,24 @@
     .video-ratio-16-9 { aspect-ratio: 16 / 9; width: 100%; }
     .video-ratio-9-16 { aspect-ratio: 9 / 16; max-width: 330px; margin-left: auto; margin-right: auto; }
 
+    #video-wrapper:fullscreen,
+    #video-wrapper:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+      border: none !important;
+      background: #000 !important;
+    }
+    #video-wrapper:fullscreen iframe,
+    #video-wrapper:-webkit-full-screen iframe,
+    #video-wrapper:fullscreen video,
+    #video-wrapper:-webkit-full-screen video {
+      width: 100vw !important;
+      height: 100vh !important;
+      border-radius: 0 !important;
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(20px);
@@ -197,10 +215,6 @@
         <span class="truncate">Chế độ Quản trị Admin</span>
       </div>
       <div class="flex items-center gap-1.5 shrink-0">
-        <!-- Nút Mở Terminal CMD -->
-        <button id="btn-open-cmd" class="px-2 py-0.5 rounded bg-black/40 hover:bg-black/60 text-emerald-300 font-mono text-[11px] font-bold active:scale-95 transition flex items-center gap-1 border border-emerald-500/50 shadow-xs">
-          <span>&gt;_ CMD</span>
-        </button>
         <!-- Nút Thoát Admin -->
         <button id="btn-admin-logout" class="px-2 py-0.5 rounded bg-black/20 hover:bg-black/30 text-[11px] font-bold active:scale-95 transition">
           Thoát
@@ -320,7 +334,7 @@
             </p>
 
             <!-- Video Aspect Switcher -->
-            <div class="flex items-center justify-center gap-2 mt-3">
+            <div class="flex items-center justify-center gap-2 mt-3 flex-wrap">
               <span class="text-[11px] text-slate-500 font-medium">Khung hình:</span>
               <button id="btn-ratio-16-9" class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-deepNavy-900 text-amberGold-300 shadow-xs transition active:scale-95">
                 Ngang 16:9
@@ -328,20 +342,26 @@
               <button id="btn-ratio-9-16" class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-cream-200 text-slate-700 hover:bg-cream-300 transition active:scale-95">
                 Dọc 9:16 (TikTok)
               </button>
+              <button id="btn-rotate-landscape" class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-amberGold-600 hover:bg-amberGold-500 text-white shadow-xs transition active:scale-95 flex items-center gap-1" title="Xoay ngang toàn màn hình">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                </svg>
+                <span>Xoay ngang ⛶</span>
+              </button>
             </div>
           </div>
 
-          <!-- Video Player Box (TỰ ĐỘNG TẮT NHẠC NỀN KHI PHÁT) -->
+          <!-- Video Player Box (TỰ ĐỘNG TẮT NHẠC NỀN KHI PHÁT & TỰ ĐỘNG XOAY NGANG) -->
           <div class="relative reveal">
             <div class="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-amberGold-600 via-amberGold-400 to-amberGold-700 opacity-60 blur-md pointer-events-none"></div>
 
             <div id="video-wrapper" class="relative rounded-2xl overflow-hidden bg-deepNavy-950 shadow-2xl border-2 border-amberGold-400/80 video-ratio-16-9 transition-all duration-500 flex items-center justify-center">
               
-              <!-- Direct YouTube Video Player -->
+              <!-- Direct YouTube Video Player (Đã tắt phụ đề: cc_load_policy=0 & iv_load_policy=3) -->
               <iframe 
                 id="yt-tribute-video"
                 class="w-full h-full rounded-2xl" 
-                src="https://www.youtube.com/embed/g3mcwR-Td7s?enablejsapi=1&rel=0&modestbranding=1" 
+                src="https://www.youtube.com/embed/g3mcwR-Td7s?enablejsapi=1&rel=0&modestbranding=1&cc_load_policy=0&iv_load_policy=3" 
                 title="Thước Phim Tri Ân 20/11 - Tập Thể Lớp 11/1" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -588,62 +608,6 @@
 
   </div>
 
-  <!-- ================= MODAL: TERMINAL CMD ADMIN CONSOLE ================= -->
-  <div id="modal-cmd" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex-col items-center justify-center p-3 sm:p-5">
-    <div class="w-full max-w-2xl bg-[#0C1017] rounded-xl border border-emerald-500/50 shadow-2xl overflow-hidden flex flex-col h-[85vh] max-h-[600px] font-mono text-xs">
-      
-      <div class="bg-[#161B22] px-4 py-2.5 border-b border-emerald-500/30 flex items-center justify-between text-slate-300">
-        <div class="flex items-center space-x-2">
-          <span class="w-3 h-3 rounded-full bg-rose-500 inline-block cursor-pointer" id="btn-close-cmd-dot"></span>
-          <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
-          <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-          <span class="ml-2 font-bold text-emerald-400 text-[11px]">ADMIN TERMINAL CMD - 11/1 CONSOLE</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-[10px] text-slate-500 hidden sm:inline">Phím tắt: ESC để thoát</span>
-          <button id="btn-close-cmd" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] active:scale-95">
-            ✕ Đóng
-          </button>
-        </div>
-      </div>
-
-      <div id="cmd-output" class="flex-grow p-4 overflow-y-auto space-y-1.5 text-slate-300 select-text leading-relaxed">
-        <div class="text-amber-400 whitespace-pre">
-  ██████╗  ██╗     ██████╗   ██████╗ ███╗   ███╗██████╗ 
-  ██╔══██╗███║    ██╔════╝  ██╔════╝ ████╗ ████║██╔══██╗
-  ██████╔╝╚██║    ███████╗  ██║     ██╔████╔██║██║  ██║
-  ██╔══██╗ ██║    ██╔═══██╗ ██║     ██║╚██╔╝██║██║  ██║
-  ██████╔╝ ██║    ╚██████╔╝ ╚██████╗██║ ╚═╝ ██║██████╔╝
-  ╚═════╝  ╚═╝     ╚═════╝   ╚═════╝╚═╝     ╚═╝╚═════╝ 
-        </div>
-        <div class="text-emerald-400 font-bold">
-          ✦ HỆ THỐNG DÒNG LỆNH QUẢN TRỊ 11/1 (B1 - BEATING AS ONE) ✦
-        </div>
-        <div class="text-slate-400 text-[11px]">
-          Chào mừng Quản trị viên! Gõ <span class="text-amber-300 font-bold">help</span> để xem các lệnh quản trị nhanh.
-        </div>
-        <div class="text-slate-500 text-[10px] border-b border-slate-800 pb-2">
-          Hệ thống: Client Standalone • Trạng thái: Đã xác thực bảo mật
-        </div>
-      </div>
-
-      <form id="cmd-form" class="bg-[#12161F] p-3 border-t border-emerald-500/30 flex items-center gap-2">
-        <span class="text-emerald-400 font-bold whitespace-nowrap">admin@11-1:~$</span>
-        <input 
-          type="text" 
-          id="cmd-input" 
-          autocomplete="off" 
-          spellcheck="false" 
-          class="flex-grow bg-transparent text-emerald-300 focus:outline-none font-mono text-xs caret-emerald-400"
-          placeholder="Gõ lệnh (vd: help, video, photo, music, hearts, cls)..."
-        >
-        <button type="submit" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded text-[11px] active:scale-95 transition">
-          GỬI
-        </button>
-      </form>
-    </div>
-  </div>
-
   <!-- ================= MODAL: ĐĂNG NHẬP ADMIN (SHA-256 HASH VERIFICATION) ================= -->
   <div id="modal-admin-login" class="fixed inset-0 bg-deepNavy-950/85 backdrop-blur-sm z-50 hidden flex-col items-center justify-center p-4">
     <div class="w-full max-w-xs bg-white rounded-2xl p-5 shadow-2xl border-2 border-amberGold-500 text-center space-y-3">
@@ -848,7 +812,7 @@
           updateMusicUI(false);
         }
       } else {
-        if (wasMusicPlayingBeforeTabHidden && !userPausedMusicManually && tributeVideo.paused) {
+        if (wasMusicPlayingBeforeTabHidden && !userPausedMusicManually && (!tributeVideo || tributeVideo.paused)) {
           bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
           wasMusicPlayingBeforeTabHidden = false;
         }
@@ -856,18 +820,82 @@
     });
 
     /* =========================================================
-       3. TƯƠNG TÁC GIỮA VIDEO YOUTUBE VÀ NHẠC NỀN
+       3. TƯƠNG TÁC GIỮA VIDEO YOUTUBE VÀ NHẠC NỀN & TỰ ĐỘNG XOAY NGANG
        ========================================================= */
     const videoWrapper = document.getElementById('video-wrapper');
     const btnRatio169 = document.getElementById('btn-ratio-16-9');
     const btnRatio916 = document.getElementById('btn-ratio-9-16');
+    const btnRotate = document.getElementById('btn-rotate-landscape');
     const tributeVideo = document.getElementById('tribute-video');
     let ytPlayer = null;
+
+    // Tự động xoay ngang màn hình (Landscape) khi phát video
+    async function rotateToLandscape() {
+      try {
+        const el = videoWrapper || document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          if (el.requestFullscreen) {
+            await el.requestFullscreen();
+          } else if (el.webkitRequestFullscreen) {
+            await el.webkitRequestFullscreen();
+          }
+        }
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock('landscape');
+        }
+      } catch (err) {
+        console.log('Chế độ xoay ngang:', err);
+      }
+    }
+
+    async function exitLandscape() {
+      try {
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+        if (document.fullscreenElement && document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+          await document.webkitExitFullscreen();
+        }
+      } catch (_) {}
+    }
+
+    // Sự kiện thoát Fullscreen từ người dùng -> mở khóa hướng màn hình
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && screen.orientation && screen.orientation.unlock) {
+        try { screen.orientation.unlock(); } catch (_) {}
+      }
+    });
+    document.addEventListener('webkitfullscreenchange', () => {
+      if (!document.webkitFullscreenElement && screen.orientation && screen.orientation.unlock) {
+        try { screen.orientation.unlock(); } catch (_) {}
+      }
+    });
+
+    if (btnRotate) {
+      btnRotate.addEventListener('click', (e) => {
+        e.stopPropagation();
+        rotateToLandscape();
+      });
+    }
 
     window.onYouTubeIframeAPIReady = function() {
       try {
         ytPlayer = new YT.Player('yt-tribute-video', {
+          playerVars: {
+            cc_load_policy: 0,
+            iv_load_policy: 3,
+            rel: 0,
+            modestbranding: 1
+          },
           events: {
+            'onReady': (e) => {
+              try {
+                // Tắt hoàn toàn phụ đề / captions YouTube
+                e.target.unloadModule('captions');
+              } catch (_) {}
+            },
             'onStateChange': onYtStateChange
           }
         });
@@ -877,15 +905,24 @@
     };
 
     function onYtStateChange(event) {
-      // 1 = PLAYING
+      // 1 = PLAYING (Bật video)
       if (event.data === 1) {
         if (!bgMusic.paused) {
           wasMusicPlayingBeforeVideo = true;
           bgMusic.pause();
           updateMusicUI(false);
         }
+        // Tắt phụ đề khi phát
+        try {
+          if (ytPlayer && ytPlayer.unloadModule) ytPlayer.unloadModule('captions');
+        } catch (_) {}
+        // Bật video là tự động xoay màn ngang
+        rotateToLandscape();
       } else if (event.data === 2 || event.data === 0) {
         // 2 = PAUSED, 0 = ENDED
+        if (event.data === 0) {
+          exitLandscape();
+        }
         if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
           bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
         }
@@ -903,7 +940,9 @@
               bgMusic.pause();
               updateMusicUI(false);
             }
+            rotateToLandscape();
           } else if (data.info === 2 || data.info === 0) {
+            if (data.info === 0) exitLandscape();
             if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
               bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
             }
@@ -919,6 +958,7 @@
           bgMusic.pause();
           updateMusicUI(false);
         }
+        rotateToLandscape();
       });
       tributeVideo.addEventListener('pause', () => {
         if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
@@ -926,6 +966,7 @@
         }
       });
       tributeVideo.addEventListener('ended', () => {
+        exitLandscape();
         if (wasMusicPlayingBeforeVideo && !userPausedMusicManually && !document.hidden) {
           bgMusic.play().then(() => updateMusicUI(true)).catch(() => {});
         }
@@ -974,6 +1015,7 @@
             bgMusic.pause();
             updateMusicUI(false);
           }
+          rotateToLandscape();
         });
         alert('Đã cập nhật video từ máy thành công!');
       }
@@ -1008,7 +1050,7 @@
       videoWrapper.innerHTML = `
         <iframe 
           id="yt-tribute-video"
-          src="https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1" 
+          src="https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&cc_load_policy=0&iv_load_policy=3" 
           title="Thước Phim Tri Ân 20/11" 
           class="w-full h-full rounded-2xl" 
           frameborder="0" 
@@ -1019,7 +1061,11 @@
       try {
         if (window.YT && YT.Player) {
           ytPlayer = new YT.Player('yt-tribute-video', {
-            events: { 'onStateChange': onYtStateChange }
+            playerVars: { cc_load_policy: 0, iv_load_policy: 3, rel: 0, modestbranding: 1 },
+            events: {
+              'onReady': (e) => { try { e.target.unloadModule('captions'); } catch (_) {} },
+              'onStateChange': onYtStateChange
+            }
           });
         }
       } catch (_) {}
@@ -1271,208 +1317,7 @@
     }
 
     /* =========================================================
-       6. TERMINAL CMD ADMIN CONSOLE
-       ========================================================= */
-    const modalCmd = document.getElementById('modal-cmd');
-    const btnOpenCmd = document.getElementById('btn-open-cmd');
-    const btnCloseCmd = document.getElementById('btn-close-cmd');
-    const btnCloseCmdDot = document.getElementById('btn-close-cmd-dot');
-    const cmdForm = document.getElementById('cmd-form');
-    const cmdInput = document.getElementById('cmd-input');
-    const cmdOutput = document.getElementById('cmd-output');
-
-    function openCmd() {
-      if (!isAdmin) {
-        promptAdminLogin();
-        return;
-      }
-      modalCmd.classList.remove('hidden');
-      modalCmd.classList.add('flex');
-      cmdInput.focus();
-      scrollCmdBottom();
-    }
-
-    function closeCmd() {
-      modalCmd.classList.add('hidden');
-      modalCmd.classList.remove('flex');
-    }
-
-    btnOpenCmd.addEventListener('click', openCmd);
-    btnCloseCmd.addEventListener('click', closeCmd);
-    btnCloseCmdDot.addEventListener('click', closeCmd);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modalCmd.classList.contains('hidden')) closeCmd();
-      if ((e.ctrlKey && e.key === '`') || (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a')) {
-        e.preventDefault();
-        if (modalCmd.classList.contains('hidden')) openCmd();
-        else closeCmd();
-      }
-    });
-
-    function scrollCmdBottom() { cmdOutput.scrollTop = cmdOutput.scrollHeight; }
-
-    function printCmd(text, type = 'normal') {
-      const line = document.createElement('div');
-      if (type === 'cmd') {
-        line.className = 'text-emerald-400 font-bold mt-2';
-        line.innerHTML = `<span class="text-slate-500">admin@11-1:~$</span> ${escapeHTML(text)}`;
-      } else if (type === 'error') {
-        line.className = 'text-rose-400';
-        line.innerHTML = `❌ ${escapeHTML(text)}`;
-      } else if (type === 'success') {
-        line.className = 'text-emerald-300';
-        line.innerHTML = `✔ ${escapeHTML(text)}`;
-      } else if (type === 'warning') {
-        line.className = 'text-amber-300';
-        line.innerHTML = `⚠ ${escapeHTML(text)}`;
-      } else {
-        line.className = 'text-slate-300';
-        line.innerHTML = text;
-      }
-      cmdOutput.appendChild(line);
-      scrollCmdBottom();
-    }
-
-    cmdForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const raw = cmdInput.value.trim();
-      if (!raw) return;
-      cmdInput.value = '';
-      printCmd(raw, 'cmd');
-      executeCommand(raw);
-    });
-
-    function executeCommand(input) {
-      const parts = input.trim().split(' ');
-      const cmd = parts[0].toLowerCase();
-      const args = parts.slice(1);
-      const fullArg = args.join(' ');
-
-      switch (cmd) {
-        case 'help':
-        case '?':
-          printCmd(`
-<div class="text-amber-300 font-bold mb-1">DANH SÁCH LỆNH CMD ADMIN:</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] text-slate-300">
-  <div>• <span class="text-emerald-400 font-semibold">video [link/file]</span>: Đổi video (YouTube/MP4)</div>
-  <div>• <span class="text-emerald-400 font-semibold">photo list</span>: Xem danh sách album ảnh</div>
-  <div>• <span class="text-emerald-400 font-semibold">photo del [số]</span>: Xóa ảnh theo số thứ tự</div>
-  <div>• <span class="text-emerald-400 font-semibold">music on / off</span>: Bật hoặc tắt nhạc nền</div>
-  <div>• <span class="text-emerald-400 font-semibold">music vol [0-100]</span>: Chỉnh âm lượng (vd: music vol 25)</div>
-  <div>• <span class="text-emerald-400 font-semibold">hearts [số]</span>: Cập nhật số tim (vd: hearts 2011)</div>
-  <div>• <span class="text-emerald-400 font-semibold">quote [lời chúc]</span>: Sửa lời tri ân</div>
-  <div>• <span class="text-emerald-400 font-semibold">cls</span>: Xóa màn hình CMD</div>
-  <div>• <span class="text-emerald-400 font-semibold">exit</span>: Đóng CMD</div>
-  <div>• <span class="text-emerald-400 font-semibold">logout</span>: Đăng xuất Admin</div>
-</div>
-          `);
-          break;
-
-        case 'video':
-          if (!fullArg) {
-            printCmd('Cú pháp: video [link_youtube_hoặc_file_mp4]', 'warning');
-            return;
-          }
-          if (fullArg.includes('youtube.com') || fullArg.includes('youtu.be')) {
-            let vid = fullArg;
-            const m = fullArg.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-            if (m) vid = m[1];
-            if (!bgMusic.paused) { bgMusic.pause(); updateMusicUI(false); }
-            applyYoutubeVideo(vid);
-            printCmd(`Đã cập nhật video YouTube (ID: ${vid})!`, 'success');
-          } else {
-            tributeVideo.src = fullArg;
-            videoOverlay.style.display = 'none';
-            tributeVideo.play();
-            printCmd(`Đã phát video: ${fullArg}`, 'success');
-          }
-          break;
-
-        case 'photo':
-          const sub = (args[0] || '').toLowerCase();
-          if (sub === 'list') {
-            let out = '<div class="text-amber-300 font-bold">ALBUM ẢNH KỶ NIỆM:</div>';
-            photosData.forEach((p, i) => {
-              out += `<div>[Ảnh ${i + 1}] <span class="text-white">${escapeHTML(p.src)}</span></div>`;
-            });
-            printCmd(out);
-          } else if (sub === 'del') {
-            const idx = parseInt(args[1]) - 1;
-            if (isNaN(idx) || idx < 0 || idx >= photosData.length) {
-              printCmd(`Số thứ tự không hợp lệ (1 - ${photosData.length})`, 'error');
-              return;
-            }
-            photosData.splice(idx, 1);
-            if (currentSlide >= photosData.length) currentSlide = photosData.length - 1;
-            renderCarousel();
-            printCmd(`Đã xóa ảnh #${idx + 1}!`, 'success');
-          } else {
-            printCmd('Lệnh photo: list | del [số]', 'warning');
-          }
-          break;
-
-        case 'music':
-          const mSub = (args[0] || '').toLowerCase();
-          if (mSub === 'on' || mSub === 'play') {
-            bgMusic.play().then(() => updateMusicUI(true));
-            printCmd('Nhạc nền: BẬT 🎵', 'success');
-          } else if (mSub === 'off' || mSub === 'pause') {
-            bgMusic.pause();
-            updateMusicUI(false);
-            printCmd('Nhạc nền: TẮT ⏸', 'success');
-          } else if (mSub === 'vol' || mSub === 'volume') {
-            const v = parseInt(args[1]);
-            if (isNaN(v) || v < 0 || v > 100) {
-              printCmd('Cú pháp: music vol [0-100]', 'warning');
-              return;
-            }
-            bgMusic.volume = v / 100;
-            printCmd(`Âm lượng nhạc nền: ${v}%`, 'success');
-          }
-          break;
-
-        case 'hearts':
-          const h = parseInt(fullArg);
-          if (!isNaN(h)) {
-            heartCount = h;
-            heartDisplay.textContent = heartCount.toLocaleString('vi-VN');
-            localStorage.setItem('hearts_11_1', heartCount.toString());
-            printCmd(`Đã cập nhật số tim thành: ${heartCount.toLocaleString('vi-VN')}`, 'success');
-          }
-          break;
-
-        case 'quote':
-          if (fullArg) {
-            document.getElementById('quote-content-display').innerHTML = `<p class="leading-relaxed pretty-text">${escapeHTML(fullArg).replace(/\n/g, '<br>')}</p>`;
-            printCmd('Đã cập nhật lời tri ân!', 'success');
-          }
-          break;
-
-        case 'cls':
-        case 'clear':
-          cmdOutput.innerHTML = '';
-          printCmd('<span class="text-slate-500 text-[11px]">Màn hình console đã được làm sạch. Gõ "help" nếu cần trợ giúp.</span>');
-          break;
-
-        case 'exit':
-          closeCmd();
-          break;
-
-        case 'logout':
-          setAdminState(false);
-          closeCmd();
-          alert('Đã đăng xuất khỏi quyền Admin.');
-          break;
-
-        default:
-          printCmd(`Lệnh không hợp lệ: "${cmd}". Gõ "help" để xem danh sách lệnh!`, 'error');
-          break;
-      }
-    }
-
-    /* =========================================================
-       7. CANVAS HIỆU ỨNG CÁNH HOA VÀNG BAY
+       6. CANVAS HIỆU ỨNG CÁNH HOA VÀNG BAY
        ========================================================= */
     const canvas = document.getElementById('petals-canvas');
     const ctx = canvas.getContext('2d');
